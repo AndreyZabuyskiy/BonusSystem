@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using BonusSystem.Models;
+using BonusSystem.Models.Db;
 
 namespace BonusSystem.Controllers
 {
@@ -13,17 +14,15 @@ namespace BonusSystem.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private ApplicationContext _db;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationContext db)
         {
             _logger = logger;
+            _db = db;
         }
 
         public IActionResult Index()
-        {
-            return View();
-        }
-
-        public IActionResult Privacy()
         {
             return View();
         }
