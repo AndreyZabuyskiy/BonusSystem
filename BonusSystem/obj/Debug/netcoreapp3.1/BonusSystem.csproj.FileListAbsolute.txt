@@ -75,3 +75,5 @@ D:\Программирование\Приложения\BonusSystem\BonusSystem
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\BonusSystem.pdb
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\BonusSystem.genruntimeconfig.cache
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Create.cshtml.g.cs
+D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\ViewClient.cshtml.g.cs
+D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Test.cshtml.g.cs

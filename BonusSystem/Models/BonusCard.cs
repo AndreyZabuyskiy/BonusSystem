@@ -10,6 +10,7 @@ namespace BonusSystem.Models
         public Guid Id { get; set; }
 
         public int Number { get; set; }
+        public DateTime CreateDate { get; set; }
         public DateTime ExpirationDate { get; set; }
         public int Balance { get; set; }
 
