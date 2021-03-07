@@ -3,6 +3,7 @@
 <p>ClientId: @Model.Id</p>
 <p>@Model.FirstName @Model.MiddleName @Model.LastName</p>
 <p>Phone number: @Model.PhoneNumber</p>
+<a asp-controller="client" asp-action="edit" asp-route-id=@Model.Id>Edit client</a>
 
 <hr />
 

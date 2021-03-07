@@ -15,5 +15,13 @@ namespace BonusSystem.Models
         public string PhoneNumber { get; set; }
 
         public BonusCard BonusCard { get; set; }
+
+        public void Copy(Client client)
+        {
+            FirstName = client.FirstName;
+            LastName = client.LastName;
+            MiddleName = client.MiddleName;
+            PhoneNumber = client.PhoneNumber;
+        }
     }
 }

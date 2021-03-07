@@ -86,7 +86,7 @@ namespace BonusSystem.Controllers
         {
             Random rnd = new Random();
 
-            int number = rnd.Next(1, 10);
+            int number = rnd.Next(100000, 999999);
             var cards = await _db.BonusCards.ToListAsync();
 
             if (cards != null)
@@ -105,7 +105,7 @@ namespace BonusSystem.Controllers
 
                     if (!isUniqueNumber)
                     {
-                        number = rnd.Next(1, 10);
+                        number = rnd.Next(100000, 999999);
                     }
                 } while (!isUniqueNumber);
             }

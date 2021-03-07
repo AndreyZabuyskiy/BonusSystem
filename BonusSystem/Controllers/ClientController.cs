@@ -33,5 +33,38 @@ namespace BonusSystem.Controllers
 
             return NotFound();
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(Guid id)
+        {
+            if(id != null)
+            {
+                var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
+
+                if(client != null)
+                {
+                    return View(client);
+                }
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Client client)
+        {
+            if(client != null)
+            {
+                var editClient = await _db.Clients.FirstOrDefaultAsync(c => c.Id == client.Id);
+
+                if(editClient != null)
+                {
+                    editClient.Copy(client);
+                    await _db.SaveChangesAsync();
+                }
+            }
+
+            return RedirectToAction("View", new { id = client.Id });
+        }
     }
 }
