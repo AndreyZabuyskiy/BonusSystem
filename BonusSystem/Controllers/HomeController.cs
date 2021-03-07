@@ -66,22 +66,6 @@ namespace BonusSystem.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<IActionResult> ViewClient(Guid id)
-        {
-            if(id != null)
-            {
-                var client = await _db.Clients.Include(c => c.BonusCard)
-                    .FirstOrDefaultAsync(c => c.Id == id);
-                
-                if(client != null)
-                {
-                    return View(client);
-                }
-            }
-
-            return RedirectToAction("Index");
-        }
-
         public async Task<IActionResult> RemoveClient(Guid id)
         {
             if(id != null)

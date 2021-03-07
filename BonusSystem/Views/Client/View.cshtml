@@ -1,7 +1,15 @@
 ﻿@model Client
 
+<p>ClientId: @Model.Id</p>
 <p>@Model.FirstName @Model.MiddleName @Model.LastName</p>
 <p>Phone number: @Model.PhoneNumber</p>
+
+<hr />
+
+<p>CardId: @Model.BonusCard.Id</p>
 <p>Number card: @Model.BonusCard.Number</p>
 <p>Balance: @Model.BonusCard.Balance</p>
-<p>Data: @Model.BonusCard.CreateDate - @Model.BonusCard.ExpirationDate</p>
+<p>
+    <div>Create data: @Model.BonusCard.CreateDate</div>
+    <div>Expiration data: @Model.BonusCard.ExpirationDate</div>
+</p>
