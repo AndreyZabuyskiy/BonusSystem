@@ -1,0 +1,19 @@
+﻿@model BonusSystem.Models.ViewModels.ViewBonusCard_Money
+
+@{
+    ViewBag.Title = "Credit funds to a card";
+}
+
+<h2>Card number: @Model.Card.Number</h2>
+<p>Balance: @Model.Card.Balance</p>
+<p>CardId: @Model.Card.Id</p>
+
+<form asp-action="creditfundstocard" asp-controller="client" asp-route-model=@Model>
+    <div class="form-group">
+        <label asp-for="Money" class="control-label">Money</label>
+        <input type="number" asp-for="Money" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-default" />
+    </div>
+</form>

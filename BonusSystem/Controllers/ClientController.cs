@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BonusSystem.Models;
 using BonusSystem.Models.Db;
+using BonusSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -65,6 +66,52 @@ namespace BonusSystem.Controllers
             }
 
             return RedirectToAction("View", new { id = client.Id });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> CreditFundsToCard(Guid id)
+        {
+            if (id != null) 
+            {
+                var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
+
+                if (card != null)
+                {
+                    ViewBonusCard_Money model = new ViewBonusCard_Money()
+                    {
+                        Card = card
+                    };
+
+                    return View(model);
+                }
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreditFundsToCard(ViewBonusCard_Money model)
+        {
+            if(model != null)
+            {
+                if(model.Card == null)
+                    return RedirectToAction("Test");
+
+                var card = await _db.BonusCards.Include(c => c.Client)
+                                    .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
+
+                card.Balance += model.Money;
+                await _db.SaveChangesAsync();
+
+                return RedirectToAction("View", new { id = card.Client.Id });
+            }
+
+            return NotFound();
+        }
+
+        public IActionResult Test()
+        {
+            return View();
         }
     }
 }
