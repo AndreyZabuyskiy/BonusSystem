@@ -136,8 +136,11 @@ namespace BonusSystem.Controllers
                 {
                     if(card.ExpirationDate > DateTime.Now)
                     {
-                        card.Balance -= model.Money;
-                        await _db.SaveChangesAsync();
+                        if(card.Balance > model.Money)
+                        {
+                            card.Balance -= model.Money;
+                            await _db.SaveChangesAsync();
+                        }
 
                         return RedirectToAction("View", new { id = card.Client.Id });
                     }
