@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BonusSystem.Models;
 using BonusSystem.Models.Db;
@@ -77,11 +75,7 @@ namespace BonusSystem.Controllers
 
                 if (card != null)
                 {
-                    ViewBonusCard_Money model = new ViewBonusCard_Money()
-                    {
-                        Card = card
-                    };
-
+                    ViewBonusCard_Money model = new ViewBonusCard_Money(){ Card = card };
                     return View(model);
                 }
             }
@@ -94,9 +88,6 @@ namespace BonusSystem.Controllers
         {
             if(model != null)
             {
-                if(model.Card == null)
-                    return RedirectToAction("Test");
-
                 var card = await _db.BonusCards.Include(c => c.Client)
                                     .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
 
