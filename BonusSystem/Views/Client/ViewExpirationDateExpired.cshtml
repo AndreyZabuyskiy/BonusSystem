@@ -1,0 +1,4 @@
+﻿@model BonusSystem.Models.BonusCard
+
+<h2>Срок действия карты: @Model.Number истек(@Model.ExpirationDate)</h2>
+<a asp-controller="Client" asp-action="View" asp-route-id=@Model.Client.Id>Назад</a>

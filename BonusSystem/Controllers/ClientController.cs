@@ -36,11 +36,11 @@ namespace BonusSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            if(id != null)
+            if (id != null)
             {
                 var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
-                if(client != null)
+                if (client != null)
                 {
                     return View(client);
                 }
@@ -52,11 +52,11 @@ namespace BonusSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(Client client)
         {
-            if(client != null)
+            if (client != null)
             {
                 var editClient = await _db.Clients.FirstOrDefaultAsync(c => c.Id == client.Id);
 
-                if(editClient != null)
+                if (editClient != null)
                 {
                     editClient.Copy(client);
                     await _db.SaveChangesAsync();
@@ -69,13 +69,13 @@ namespace BonusSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> CreditFundsToCard(Guid id)
         {
-            if (id != null) 
+            if (id != null)
             {
                 var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
 
                 if (card != null)
                 {
-                    ViewBonusCard_Money model = new ViewBonusCard_Money(){ Card = card };
+                    ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
                     return View(model);
                 }
             }
@@ -86,15 +86,22 @@ namespace BonusSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> CreditFundsToCard(ViewBonusCard_Money model)
         {
-            if(model != null)
+            if (model != null)
             {
                 var card = await _db.BonusCards.Include(c => c.Client)
                                     .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
 
-                card.Balance += model.Money;
-                await _db.SaveChangesAsync();
+                if(card.ExpirationDate > DateTime.Now)
+                {
+                    card.Balance += model.Money;
+                    await _db.SaveChangesAsync();
 
-                return RedirectToAction("View", new { id = card.Client.Id });
+                    return RedirectToAction("View", new { id = card.Client.Id });
+                }
+                else
+                {
+                    return RedirectToAction("ViewExpirationDateExpired", new { id = card.Id });
+                }
             }
 
             return NotFound();
@@ -103,11 +110,11 @@ namespace BonusSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> WritingOffFundsFromBonusCard(Guid id)
         {
-            if(id != null)
+            if (id != null)
             {
                 var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
 
-                if(card != null)
+                if (card != null)
                 {
                     ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
                     return View(model);
@@ -120,21 +127,41 @@ namespace BonusSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> WritingOffFundsFromBonusCard(ViewBonusCard_Money model)
         {
-            if(model != null)
+            if (model != null)
             {
                 var card = await _db.BonusCards.Include(c => c.Client)
                                     .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
 
-                if(card != null)
+                if (card != null)
                 {
-                    card.Balance -= model.Money;
-                    await _db.SaveChangesAsync();
+                    if(card.ExpirationDate > DateTime.Now)
+                    {
+                        card.Balance -= model.Money;
+                        await _db.SaveChangesAsync();
 
-                    return RedirectToAction("View", new { id = card.Client.Id });
+                        return RedirectToAction("View", new { id = card.Client.Id });
+                    }
+                    else
+                    {
+                        return RedirectToAction("ViewExpirationDateExpired", new { id = card.Id });
+                    }
                 }
             }
 
             return NotFound();
+        }
+
+        public async Task<IActionResult> ViewExpirationDateExpired(Guid id) 
+        {
+            var card = await _db.BonusCards.Include(c => c.Client)
+                                           .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (card != null)
+            {
+                return View(card);
+            }
+
+            return NotFound(); 
         }
 
         public IActionResult Test()
