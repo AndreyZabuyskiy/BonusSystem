@@ -4,13 +4,13 @@
     ViewBag.Title = "Credit funds to a card";
 }
 
-<h1>Зачисление средств на карту</h1>
+<h1>Списание средств с бонусной карты</h1>
 
 <h3>Card number: @Model.Card.Number</h3>
 <p>Balance: @Model.Card.Balance</p>
 <p>CardId: @Model.Card.ClientId</p>
 
-<form asp-action="creditfundstocard" asp-controller="client">
+<form asp-action="WritingOffFundsFromBonusCard" asp-controller="client">
     <input type="hidden" asp-for="Card.Id" value="@Model.Card.Id" />
     <div class="form-group">
         <label asp-for="Money" class="control-label">Money</label>

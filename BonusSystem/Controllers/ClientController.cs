@@ -100,6 +100,43 @@ namespace BonusSystem.Controllers
             return NotFound();
         }
 
+        [HttpGet]
+        public async Task<IActionResult> WritingOffFundsFromBonusCard(Guid id)
+        {
+            if(id != null)
+            {
+                var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
+
+                if(card != null)
+                {
+                    ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
+                    return View(model);
+                }
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> WritingOffFundsFromBonusCard(ViewBonusCard_Money model)
+        {
+            if(model != null)
+            {
+                var card = await _db.BonusCards.Include(c => c.Client)
+                                    .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
+
+                if(card != null)
+                {
+                    card.Balance -= model.Money;
+                    await _db.SaveChangesAsync();
+
+                    return RedirectToAction("View", new { id = card.Client.Id });
+                }
+            }
+
+            return NotFound();
+        }
+
         public IActionResult Test()
         {
             return View();

@@ -15,3 +15,4 @@
     <div>Expiration data: @Model.BonusCard.ExpirationDate</div>
 </p>
 <a asp-controller="client" asp-action="creditfundstocard" asp-route-id=@Model.BonusCard.Id>Credit funds</a>
+<a asp-controller="client" asp-action="WritingOffFundsFromBonusCard" asp-route-id="@Model.BonusCard.Id">Writing off funds</a>
