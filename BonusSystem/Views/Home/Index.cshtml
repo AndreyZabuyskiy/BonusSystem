@@ -7,6 +7,8 @@
 @foreach (var client in Model)
 {
     <p>@client.FirstName @client.MiddleName @client.LastName</p>
+    <p>Phone number: @client.PhoneNumber</p>
+    <p>Number: @client.BonusCard.Number</p>
     <a class="badge-info" asp-controller="Client" asp-action="View" asp-route-id=@client.Id>View</a>
     <a class="btn-dark" asp-controller="Home" asp-action="RemoveClient" asp-route-id="@client.Id">Remove</a>
     <hr />

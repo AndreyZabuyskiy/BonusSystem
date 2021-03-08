@@ -1,0 +1,13 @@
+﻿@model BonusSystem.Models.ViewModels.ViewSearchClient<int>
+
+<h2>Поиск по номеру карты</h2>
+
+<form asp-controller="Home" asp-action="SearchByNumberCard">
+    <div class="form-group">
+        <label asp-for="Parameter" class="control-label">Number card</label>
+        <input type="number" asp-for="Parameter" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-default" />
+    </div>
+</form>

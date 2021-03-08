@@ -152,3 +152,6 @@ D:\Программирование\Приложения\BonusSystem\BonusSystem
 D:\Программирование\Приложения\BonusSystem\BonusSystem\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\CreditFundsToCard.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\WritingOffFundsFromBonusCard.cshtml.g.cs
+D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\SearchByPhoneNumber.cshtml.g.cs
+D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Test.cshtml.g.cs
+D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\SearchByNumberCard.cshtml.g.cs
