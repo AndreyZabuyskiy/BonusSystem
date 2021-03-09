@@ -87,9 +87,7 @@ namespace BonusSystem.Controllers
                 var client = await _db.Clients.FirstOrDefaultAsync(c => c.PhoneNumber == model.PhoneNumber);
 
                 if(client != null)
-                {
                     return RedirectToAction("View", new { controller = "Client", id = client.Id });
-                }
             }
 
             return RedirectToAction("Search");
@@ -101,12 +99,10 @@ namespace BonusSystem.Controllers
             if (model != null)
             {
                 var card = await _db.BonusCards.Include(c => c.Client)
-                                                 .FirstOrDefaultAsync(c => c.Number == model.NumberCard);
+                                               .FirstOrDefaultAsync(c => c.Number == model.NumberCard);
 
                 if (card != null)
-                {                   
                     return RedirectToAction("View", new { controller = "Client", id = card.Client.Id });
-                }
             }
 
             return RedirectToAction("Search");
@@ -128,15 +124,12 @@ namespace BonusSystem.Controllers
                     foreach (var card in cards)
                     {
                         if (card.Number == number)
-                        {
                             isUniqueNumber = false;
-                        }
                     }
 
                     if (!isUniqueNumber)
-                    {
                         number = rnd.Next(100000, 999999);
-                    }
+
                 } while (!isUniqueNumber);
             }
 

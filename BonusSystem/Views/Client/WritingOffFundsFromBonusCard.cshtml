@@ -10,13 +10,21 @@
 <p>Balance: @Model.Card.Balance</p>
 <p>CardId: @Model.Card.ClientId</p>
 
-<form asp-action="WritingOffFundsFromBonusCard" asp-controller="client">
-    <input type="hidden" asp-for="Card.Id" value="@Model.Card.Id" />
-    <div class="form-group">
-        <label asp-for="Money" class="control-label">Money</label>
-        <input type="number" asp-for="Money" class="form-control" />
-    </div>
-    <div class="form-group">
-        <input type="submit" value="Submit" class="btn btn-default" />
-    </div>
-</form>
+@if (Model.Card.ExpirationDate > DateTime.Now)
+{
+    <form asp-action="WritingOffFundsFromBonusCard" asp-controller="client">
+        <input type="hidden" asp-for="Card.Id" value="@Model.Card.Id" />
+        <div class="form-group">
+            <label asp-for="Money" class="control-label">Money</label>
+            <input type="number" asp-for="Money" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Submit" class="btn btn-default" />
+        </div>
+    </form>
+}
+else
+{
+    <h3>Срок действия карты истек @Model.Card.ExpirationDate</h3>
+    <a asp-controller="Client" asp-action="View" asp-route-id="@Model.Card.ClientId">Назад</a>
+}

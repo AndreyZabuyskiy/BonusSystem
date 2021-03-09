@@ -12,22 +12,16 @@ namespace BonusSystem.Controllers
     {
         private ApplicationContext _db;
 
-        public ClientController(ApplicationContext db)
-        {
-            _db = db;
-        }
+        public ClientController(ApplicationContext db) => _db = db;
 
         public async Task<IActionResult> View(Guid id)
         {
             if (id != null)
             {
                 var client = await _db.Clients.Include(c => c.BonusCard)
-                    .FirstOrDefaultAsync(c => c.Id == id);
+                                      .FirstOrDefaultAsync(c => c.Id == id);
 
-                if (client != null)
-                {
-                    return View(client);
-                }
+                if (client != null) return View(client);
             }
 
             return NotFound();
@@ -40,10 +34,7 @@ namespace BonusSystem.Controllers
             {
                 var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
-                if (client != null)
-                {
-                    return View(client);
-                }
+                if (client != null) return View(client);
             }
 
             return NotFound();
@@ -60,10 +51,11 @@ namespace BonusSystem.Controllers
                 {
                     editClient.Copy(client);
                     await _db.SaveChangesAsync();
+                    return RedirectToAction("View", new { id = client.Id });
                 }
             }
 
-            return RedirectToAction("View", new { id = client.Id });
+            return NotFound();
         }
 
         [HttpGet]
@@ -91,16 +83,12 @@ namespace BonusSystem.Controllers
                 var card = await _db.BonusCards.Include(c => c.Client)
                                     .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
 
-                if(card.ExpirationDate > DateTime.Now)
+                if (card.ExpirationDate > DateTime.Now)
                 {
                     card.Balance += model.Money;
                     await _db.SaveChangesAsync();
 
                     return RedirectToAction("View", new { id = card.Client.Id });
-                }
-                else
-                {
-                    return RedirectToAction("ViewExpirationDateExpired", new { id = card.Id });
                 }
             }
 
@@ -134,37 +122,17 @@ namespace BonusSystem.Controllers
 
                 if (card != null)
                 {
-                    if(card.ExpirationDate > DateTime.Now)
+                    if(card.ExpirationDate > DateTime.Now && card.Balance > model.Money)
                     {
-                        if(card.Balance > model.Money)
-                        {
-                            card.Balance -= model.Money;
-                            await _db.SaveChangesAsync();
-                        }
+                        card.Balance -= model.Money;
+                        await _db.SaveChangesAsync();
+                    }
 
-                        return RedirectToAction("View", new { id = card.Client.Id });
-                    }
-                    else
-                    {
-                        return RedirectToAction("ViewExpirationDateExpired", new { id = card.Id });
-                    }
+                    return RedirectToAction("View", new { id = card.Client.Id });
                 }
             }
 
             return NotFound();
-        }
-
-        public async Task<IActionResult> ViewExpirationDateExpired(Guid id) 
-        {
-            var card = await _db.BonusCards.Include(c => c.Client)
-                                           .FirstOrDefaultAsync(c => c.Id == id);
-
-            if (card != null)
-            {
-                return View(card);
-            }
-
-            return NotFound(); 
         }
 
         public IActionResult Test()
