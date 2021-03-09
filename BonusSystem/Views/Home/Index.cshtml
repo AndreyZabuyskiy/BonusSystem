@@ -4,12 +4,42 @@
     ViewData["Title"] = "Home Page";
 }
 
-@foreach (var client in Model)
-{
-    <p>@client.FirstName @client.MiddleName @client.LastName</p>
-    <p>Phone number: @client.PhoneNumber</p>
-    <p>Number: @client.BonusCard.Number</p>
-    <a class="badge-info" asp-controller="Client" asp-action="View" asp-route-id=@client.Id>View</a>
-    <a class="btn-dark" asp-controller="Home" asp-action="RemoveClient" asp-route-id="@client.Id">Remove</a>
-    <hr />
-}
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Middlename</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Card</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int counter = 1;
+
+            foreach (var client in Model)
+            {                
+                <tr>
+                    <th scope="row">@counter</th>
+                    <td>@client.FirstName</td>
+                    <td>@client.LastName</td>
+                    <td>@client.MiddleName</td>
+                    <td>@client.PhoneNumber</td>
+                    <td>@client.BonusCard.Number</td>
+                    <td>
+                        <a class="btn btn-info" asp-controller="Client" asp-action="View" asp-route-id=@client.Id>View</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" asp-controller="Home" asp-action="RemoveClient" asp-route-id="@client.Id">Remove</a>
+                    </td>
+                </tr>
+
+                counter++;
+            }
+        }
+    </tbody>
+</table>

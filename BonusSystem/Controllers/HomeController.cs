@@ -24,21 +24,7 @@ namespace BonusSystem.Controllers
             _db = db;
         }
 
-        public async Task<IActionResult> Index(Guid id)
-        {
-            if(id != null)
-            {
-                var client = await _db.Clients.Include(c => c.BonusCard)
-                                              .FirstOrDefaultAsync(c => c.Id == id);
-
-                if(client != null)
-                {
-                    return View(new List<Client>() { client });
-                }
-            }
-
-            return View(await _db.Clients.Include(c => c.BonusCard).ToListAsync());
-        }
+        public async Task<IActionResult> Index() => View(await _db.Clients.Include(c => c.BonusCard).ToListAsync());
 
         [HttpGet]
         public IActionResult Create() => View();
@@ -90,6 +76,42 @@ namespace BonusSystem.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public IActionResult Search() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> SearchByPhoneNumber(ViewSearchClient model)
+        {
+            if(model != null)
+            {
+                var client = await _db.Clients.FirstOrDefaultAsync(c => c.PhoneNumber == model.PhoneNumber);
+
+                if(client != null)
+                {
+                    return RedirectToAction("View", new { controller = "Client", id = client.Id });
+                }
+            }
+
+            return RedirectToAction("Search");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SearchByNumberCard(ViewSearchClient model)
+        {
+            if (model != null)
+            {
+                var card = await _db.BonusCards.Include(c => c.Client)
+                                                 .FirstOrDefaultAsync(c => c.Number == model.NumberCard);
+
+                if (card != null)
+                {                   
+                    return RedirectToAction("View", new { controller = "Client", id = card.Client.Id });
+                }
+            }
+
+            return RedirectToAction("Search");
+        }
+
         private async Task<int> GetNumberCard()
         {
             Random rnd = new Random();
@@ -119,53 +141,6 @@ namespace BonusSystem.Controllers
             }
 
             return number;
-        }
-
-        [HttpGet]
-        public IActionResult SearchByPhoneNumber() => View();
-
-        [HttpPost]
-        public async Task<IActionResult> SearchByPhoneNumber(ViewSearchClient<string> model)
-        {
-            if(model.Parameter != null)
-            {
-                var client = await _db.Clients.FirstOrDefaultAsync(c => c.PhoneNumber == model.Parameter);
-
-                if(client != null)
-                {
-                    return RedirectToAction("Index", new { id = client.Id });
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-
-            return NotFound();
-        }
-
-        [HttpGet]
-        public IActionResult SearchByNumberCard() => View();
-
-        [HttpPost]
-        public async Task<IActionResult> SearchByNumberCard(ViewSearchClient<int> model)
-        {
-            if(model != null)
-            {              
-                var card = await _db.BonusCards.Include(c => c.Client)
-                                               .FirstOrDefaultAsync(c => c.Number == model.Parameter);
-
-                if (card != null)
-                {
-                    return RedirectToAction("Index", new { id = card.Client.Id });
-                }
-                else
-                {
-                    return RedirectToAction("Index");
-                }
-            }
-
-            return NotFound();
         }
 
         public IActionResult Test()

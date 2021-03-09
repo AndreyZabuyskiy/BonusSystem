@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.ViewModels
 {
-    public class ViewSearchClient <T>
+    public class ViewSearchClient
     {
-        public T Parameter { get; set; }
+        public int NumberCard { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }

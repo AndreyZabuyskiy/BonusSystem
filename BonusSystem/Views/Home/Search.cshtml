@@ -1,0 +1,21 @@
+﻿@model BonusSystem.Models.ViewModels.ViewSearchClient
+
+<form asp-controller="Home" asp-action="SearchByPhoneNumber">
+    <div class="form-group">
+        <label asp-for="@Model.PhoneNumber" class="control-label">Phone number</label>
+        <input type="text" asp-for="@Model.PhoneNumber" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-default" />
+    </div>
+</form>
+
+<form asp-controller="Home" asp-action="SearchByNumberCard">
+    <div class="form-group">
+        <label asp-for="@Model.NumberCard" class="control-label">Number card</label>
+        <input type="number" asp-for="@Model.NumberCard" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Submit" class="btn btn-default" />
+    </div>
+</form>
