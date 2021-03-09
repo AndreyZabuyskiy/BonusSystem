@@ -153,5 +153,4 @@ D:\Программирование\Приложения\BonusSystem\BonusSystem
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\CreditFundsToCard.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\WritingOffFundsFromBonusCard.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Test.cshtml.g.cs
-D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\ViewExpirationDateExpired.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Search.cshtml.g.cs

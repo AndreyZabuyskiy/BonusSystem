@@ -1,19 +1,57 @@
 ﻿@model Client
 
-
-<p>ClientId: @Model.Id</p>
-<p>@Model.FirstName @Model.MiddleName @Model.LastName</p>
-<p>Phone number: @Model.PhoneNumber</p>
-<a asp-controller="client" asp-action="edit" asp-route-id=@Model.Id>Edit client</a>
+<table class="table table-bordered table-dark">
+    <thead>
+        <tr>
+            <th scope="col">ClientId</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Middlename</th>
+            <th scope="col">Phone number</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">@Model.Id</th>
+            <td>@Model.FirstName</td>
+            <td>@Model.LastName</td>
+            <td>@Model.MiddleName</td>
+            <td>@Model.PhoneNumber</td>
+            <td>
+                <a class="btn btn-warning" asp-controller="client" asp-action="edit" asp-route-id=@Model.Id>Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <hr />
 
-<p>CardId: @Model.BonusCard.Id</p>
-<p>Number card: @Model.BonusCard.Number</p>
-<p>Balance: @Model.BonusCard.Balance</p>
-<p>
-    <div>Create data: @Model.BonusCard.CreateDate</div>
-    <div>Expiration data: @Model.BonusCard.ExpirationDate</div>
-</p>
-<a asp-controller="client" asp-action="creditfundstocard" asp-route-id=@Model.BonusCard.Id>Credit funds</a>
-<a asp-controller="client" asp-action="WritingOffFundsFromBonusCard" asp-route-id="@Model.BonusCard.Id">Writing off funds</a>
+<table class="table table-bordered table-dark">
+    <thead>
+        <tr>
+            <th scope="col">CardId</th>
+            <th scope="col">Number</th>
+            <th scope="col">Balance</th>
+            <th scope="col">Date create</th>
+            <th scope="col">Date expiration</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="row">@Model.BonusCard.Id</th>
+            <td>@Model.BonusCard.Number</td>
+            <td>@Model.BonusCard.Balance</td>
+            <td>@Model.BonusCard.CreateDate</td>
+            <td>@Model.BonusCard.ExpirationDate</td>
+            <td>
+                <a class="btn btn-success" asp-controller="client" asp-action="creditfundstocard" asp-route-id=@Model.BonusCard.Id>Credit funds</a>
+            </td>
+            <td>
+                <a class="btn btn-danger" asp-controller="client" asp-action="WritingOffFundsFromBonusCard" asp-route-id="@Model.BonusCard.Id">Debit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
