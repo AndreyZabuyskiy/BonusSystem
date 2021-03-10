@@ -37,7 +37,16 @@ namespace BonusSystem
                     .Options;
 
             ICreateClient createClient = new CreateClientService(new ApplicationContext(options));
+            IRemoveClient removeClient = new RemoveClientService(new ApplicationContext(options));
+            IEditClient editClient = new EditClientService(new ApplicationContext(options));
+            IDebit debit = new DebitService(new ApplicationContext(options));
+            ICreditFunds creditFunds = new CreditFundsService(new ApplicationContext(options));
+
             services.AddSingleton<ICreateClient>(provider => createClient);
+            services.AddSingleton<IRemoveClient>(provider => removeClient);
+            services.AddSingleton<IEditClient>(provider => editClient);
+            services.AddSingleton<IDebit>(provider => debit);
+            services.AddSingleton<ICreditFunds>(provider => creditFunds);
 
             services.AddControllersWithViews();
         }

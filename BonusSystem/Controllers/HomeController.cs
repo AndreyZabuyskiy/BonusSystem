@@ -19,13 +19,17 @@ namespace BonusSystem.Controllers
 
         private ApplicationContext _db;
         private ICreateClient _createClient;
+        private IRemoveClient _removeClient;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationContext db, 
-                                [FromServices]ICreateClient createClient)
+        public HomeController(ILogger<HomeController> logger,
+                                    ApplicationContext db, 
+                                    [FromServices]ICreateClient createClient,
+                                    [FromServices]IRemoveClient removeClient)
         {
             _logger = logger;
             _db = db;
             _createClient = createClient;
+            _removeClient = removeClient;
         }
 
         public async Task<IActionResult> Index() => View(await _db.Clients.Include(c => c.BonusCard).ToListAsync());
@@ -37,9 +41,7 @@ namespace BonusSystem.Controllers
         public async Task<IActionResult> Create(ViewCreateClient_BonusCard model)
         {
             if (ModelState.IsValid)
-            {                
                 await _createClient.Create(model);
-            }
 
             return RedirectToAction("Index");
         }
@@ -47,15 +49,7 @@ namespace BonusSystem.Controllers
         public async Task<IActionResult> RemoveClient(Guid id)
         {
             if(id != null)
-            {
-                var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
-                
-                if(client != null)
-                {
-                    _db.Clients.Remove(client);
-                    await _db.SaveChangesAsync();
-                }
-            }
+                await _removeClient.Remove(id);
 
             return RedirectToAction("Index");
         }

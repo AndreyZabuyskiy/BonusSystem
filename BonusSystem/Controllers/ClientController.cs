@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BonusSystem.Models;
 using BonusSystem.Models.Db;
+using BonusSystem.Models.Services;
 using BonusSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,8 +12,20 @@ namespace BonusSystem.Controllers
     public class ClientController : Controller
     {
         private ApplicationContext _db;
+        private IEditClient _editClient;
+        private IDebit _debit;
+        private ICreditFunds _creditFunds;
 
-        public ClientController(ApplicationContext db) => _db = db;
+        public ClientController(ApplicationContext db,
+                                [FromServices]IEditClient editClient,
+                                [FromServices]IDebit debit,
+                                [FromServices]ICreditFunds creditFunds)
+        {
+            _db = db;
+            _editClient = editClient;
+            _debit = debit;
+            _creditFunds = creditFunds;
+        }
 
         public async Task<IActionResult> View(Guid id)
         {
@@ -44,15 +57,9 @@ namespace BonusSystem.Controllers
         public async Task<IActionResult> Edit(Client client)
         {
             if (client != null)
-            {
-                var editClient = await _db.Clients.FirstOrDefaultAsync(c => c.Id == client.Id);
-
-                if (editClient != null)
-                {
-                    editClient.Copy(client);
-                    await _db.SaveChangesAsync();
-                    return RedirectToAction("View", new { id = client.Id });
-                }
+            {                
+                await _editClient.Edit(client);
+                return RedirectToAction("View", new { id = client.Id });
             }
 
             return NotFound();
@@ -80,16 +87,8 @@ namespace BonusSystem.Controllers
         {
             if (model != null)
             {
-                var card = await _db.BonusCards.Include(c => c.Client)
-                                    .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
-
-                if (card.ExpirationDate > DateTime.Now)
-                {
-                    card.Balance += model.Money;
-                    await _db.SaveChangesAsync();
-
-                    return RedirectToAction("View", new { id = card.Client.Id });
-                }
+                BonusCard card = await _creditFunds.CreditFunds(model);
+                return RedirectToAction("View", new { id = card.Client.Id });
             }
 
             return NotFound();
@@ -117,19 +116,8 @@ namespace BonusSystem.Controllers
         {
             if (model != null)
             {
-                var card = await _db.BonusCards.Include(c => c.Client)
-                                    .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
-
-                if (card != null)
-                {
-                    if(card.ExpirationDate > DateTime.Now && card.Balance > model.Money)
-                    {
-                        card.Balance -= model.Money;
-                        await _db.SaveChangesAsync();
-                    }
-
-                    return RedirectToAction("View", new { id = card.Client.Id });
-                }
+                BonusCard card = await _debit.Debit(model);
+                return RedirectToAction("View", new { id = card.Client.Id });
             }
 
             return NotFound();
