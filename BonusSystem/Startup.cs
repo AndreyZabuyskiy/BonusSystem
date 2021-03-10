@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BonusSystem.Models.Db;
+using BonusSystem.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -25,11 +26,18 @@ namespace BonusSystem
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // получаем строку подключения из файла конфигурации
             string connection = Configuration.GetConnectionString("DefaultConnection");
-            // добавляем контекст MobileContext в качестве сервиса в приложение
+
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(connection));
+
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationContext>();
+            var options = optionsBuilder
+                    .UseSqlServer(connection)
+                    .Options;
+
+            ICreateClient createClient = new CreateClientService(new ApplicationContext(options));
+            services.AddSingleton<ICreateClient>(provider => createClient);
 
             services.AddControllersWithViews();
         }

@@ -9,6 +9,7 @@ using BonusSystem.Models;
 using BonusSystem.Models.Db;
 using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using BonusSystem.Models.Services;
 
 namespace BonusSystem.Controllers
 {
@@ -17,11 +18,14 @@ namespace BonusSystem.Controllers
         private readonly ILogger<HomeController> _logger;
 
         private ApplicationContext _db;
+        private ICreateClient _createClient;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationContext db)
+        public HomeController(ILogger<HomeController> logger, ApplicationContext db, 
+                                [FromServices]ICreateClient createClient)
         {
             _logger = logger;
             _db = db;
+            _createClient = createClient;
         }
 
         public async Task<IActionResult> Index() => View(await _db.Clients.Include(c => c.BonusCard).ToListAsync());
@@ -33,28 +37,8 @@ namespace BonusSystem.Controllers
         public async Task<IActionResult> Create(ViewCreateClient_BonusCard model)
         {
             if (ModelState.IsValid)
-            {
-                int number = await GetNumberCard();
-
-                BonusCard card = new BonusCard()
-                {
-                    Number = number,
-                    CreateDate = DateTime.Now,
-                    ExpirationDate = DateTime.Now.AddDays(30),
-                    Balance = model.Balance
-                };
-
-                Client client = new Client()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    MiddleName = model.MiddleName,
-                    PhoneNumber = model.PhoneNumber,
-                    BonusCard = card
-                };
-
-                _db.Clients.Add(client);
-                await _db.SaveChangesAsync();
+            {                
+                await _createClient.Create(model);
             }
 
             return RedirectToAction("Index");
@@ -108,33 +92,6 @@ namespace BonusSystem.Controllers
             return RedirectToAction("Search");
         }
 
-        private async Task<int> GetNumberCard()
-        {
-            Random rnd = new Random();
-
-            int number = rnd.Next(100000, 999999);
-            var cards = await _db.BonusCards.ToListAsync();
-
-            if (cards != null)
-            {
-                bool isUniqueNumber = true;
-
-                do
-                {
-                    foreach (var card in cards)
-                    {
-                        if (card.Number == number)
-                            isUniqueNumber = false;
-                    }
-
-                    if (!isUniqueNumber)
-                        number = rnd.Next(100000, 999999);
-
-                } while (!isUniqueNumber);
-            }
-
-            return number;
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
