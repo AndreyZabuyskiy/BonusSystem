@@ -32,7 +32,7 @@ namespace BonusSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ViewCreateClient_BonusCard model)
         {
-            if (model != null)
+            if (ModelState.IsValid)
             {
                 int number = await GetNumberCard();
 

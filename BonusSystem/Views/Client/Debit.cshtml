@@ -12,14 +12,19 @@
 
 @if (Model.Card.ExpirationDate > DateTime.Now)
 {
-    <form asp-action="debit" asp-controller="client">
-        <input type="hidden" asp-for="Card.Id" value="@Model.Card.Id" />
-        <div class="form-group">
-            <label asp-for="Money" class="control-label">Money</label>
-            <input type="number" asp-for="Money" class="form-control" />
-        </div>
-        <div class="form-group">
-            <input type="submit" value="Submit" class="btn btn-default" />
+    <form asp-antiforgery="true" asp-action="debit" asp-controller="client">
+        <div>
+            <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+            <input type="hidden" asp-for="Card.Id" value="@Model.Card.Id" />
+            <div class="form-group">
+                <label asp-for="Money" class="control-label">Money</label>
+                <input type="number" asp-for="Money" class="form-control" />
+                <span asp-validation-for="Money"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Submit" class="btn btn-default" />
+            </div>
         </div>
     </form>
 }
@@ -28,6 +33,14 @@ else
     <div class="alert alert-danger" role="alert">
         Срок действия карты истек @Model.Card.ExpirationDate
     </div>
+}
 
-    <a asp-controller="Client" asp-action="View" asp-route-id="@Model.Card.ClientId">Назад</a>
+<a asp-controller="Client" asp-action="View" asp-route-id="@Model.Card.ClientId">Назад</a>
+
+
+
+@section scripts{
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 }
