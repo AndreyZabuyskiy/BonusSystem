@@ -59,7 +59,7 @@ namespace BonusSystem.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreditFundsToCard(Guid id)
+        public async Task<IActionResult> CreditFunds(Guid id)
         {
             if (id != null)
             {
@@ -113,7 +113,7 @@ namespace BonusSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> WritingOffFundsFromBonusCard(ViewBonusCard_Money model)
+        public async Task<IActionResult> Debit(ViewBonusCard_Money model)
         {
             if (model != null)
             {

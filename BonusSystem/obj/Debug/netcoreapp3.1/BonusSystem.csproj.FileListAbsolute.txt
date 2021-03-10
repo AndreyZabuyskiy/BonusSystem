@@ -75,7 +75,6 @@ D:\Программирование\Приложения\BonusSystem\BonusSystem
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Create.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\View.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\Edit.cshtml.g.cs
-D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\Test.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\BonusSystem.csproj.CoreCompileInputs.cache
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\BonusSystem.MvcApplicationPartsAssemblyInfo.cache
 D:\Программирование\Приложения\BonusSystem\BonusSystem\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Razor.Language.dll
@@ -150,7 +149,6 @@ D:\Программирование\Приложения\BonusSystem\BonusSystem
 D:\Программирование\Приложения\BonusSystem\BonusSystem\bin\Debug\netcoreapp3.1\tr\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Программирование\Приложения\BonusSystem\BonusSystem\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Программирование\Приложения\BonusSystem\BonusSystem\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Test.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Search.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\CreditFunds.cshtml.g.cs
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\Debit.cshtml.g.cs

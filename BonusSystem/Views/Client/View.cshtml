@@ -47,10 +47,10 @@
             <td>@Model.BonusCard.CreateDate</td>
             <td>@Model.BonusCard.ExpirationDate</td>
             <td>
-                <a class="btn btn-success" asp-controller="client" asp-action="creditfundstocard" asp-route-id=@Model.BonusCard.Id>Credit funds</a>
+                <a class="btn btn-success" asp-controller="client" asp-action="creditfunds" asp-route-id=@Model.BonusCard.Id>Credit funds</a>
             </td>
             <td>
-                <a class="btn btn-danger" asp-controller="client" asp-action="WritingOffFundsFromBonusCard" asp-route-id="@Model.BonusCard.Id">Debit</a>
+                <a class="btn btn-danger" asp-controller="client" asp-action="debit" asp-route-id="@Model.BonusCard.Id">Debit</a>
             </td>
         </tr>
     </tbody>
