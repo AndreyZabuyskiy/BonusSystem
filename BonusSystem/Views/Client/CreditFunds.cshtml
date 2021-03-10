@@ -4,7 +4,7 @@
     ViewBag.Title = "Credit funds to a card";
 }
 
-<h1>Списание средств с бонусной карты</h1>
+<h1>Зачисление средств на карту</h1>
 
 <h3>Card number: @Model.Card.Number</h3>
 <p>Balance: @Model.Card.Balance</p>
@@ -12,7 +12,7 @@
 
 @if (Model.Card.ExpirationDate > DateTime.Now)
 {
-    <form asp-action="WritingOffFundsFromBonusCard" asp-controller="client">
+    <form asp-action="creditfundstocard" asp-controller="client">
         <input type="hidden" asp-for="Card.Id" value="@Model.Card.Id" />
         <div class="form-group">
             <label asp-for="Money" class="control-label">Money</label>
@@ -25,6 +25,9 @@
 }
 else
 {
-    <h3>Срок действия карты истек @Model.Card.ExpirationDate</h3>
+    <div class="alert alert-danger" role="alert">
+        Срок действия карты истек @Model.Card.ExpirationDate
+    </div>
+
     <a asp-controller="Client" asp-action="View" asp-route-id="@Model.Card.ClientId">Назад</a>
 }
