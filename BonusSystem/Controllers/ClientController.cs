@@ -88,7 +88,12 @@ namespace BonusSystem.Controllers
             if (model != null)
             {
                 BonusCard card = await _creditFunds.CreditFunds(model);
-                return RedirectToAction("View", new { id = card.Client.Id });
+
+                try
+                {
+                    return RedirectToAction("View", new { id = card.Client.Id });
+                }
+                catch (NullReferenceException) { }
             }
 
             return NotFound();
@@ -117,7 +122,12 @@ namespace BonusSystem.Controllers
             if (model != null)
             {
                 BonusCard card = await _debit.Debit(model);
-                return RedirectToAction("View", new { id = card.Client.Id });
+
+                try
+                {
+                    return RedirectToAction("View", new { id = card.Client.Id });
+                }
+                catch (NullReferenceException) { }
             }
 
             return NotFound();

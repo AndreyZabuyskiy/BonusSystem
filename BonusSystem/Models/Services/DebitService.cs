@@ -19,23 +19,24 @@ namespace BonusSystem.Models.Services
 
         public async Task<BonusCard> Debit(ViewBonusCard_Money model)
         {
-            if (model is null) return null;
-
-            var card = await _db.BonusCards.Include(c => c.Client)
+            if (model != null) 
+            {
+                var card = await _db.BonusCards.Include(c => c.Client)
                                     .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
 
-            if (card != null)
-            {
-                if (card.ExpirationDate > DateTime.Now && card.Balance > model.Money)
+                if (card != null)
                 {
-                    card.Balance -= model.Money;
-                    await _db.SaveChangesAsync();
-                }
+                    if (card.ExpirationDate > DateTime.Now && card.Balance > model.Money)
+                    {
+                        card.Balance -= model.Money;
+                        await _db.SaveChangesAsync();
+                    }
 
-                return card;
+                    return card;
+                }
             }
 
-            return null;
+            throw new NullReferenceException();
         }
     }
 }
