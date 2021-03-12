@@ -46,7 +46,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                BonusCard card = await _credit.CreditFunds(model);
+                BonusCard card = await _credit.Credit(model);
                 return RedirectToAction("View", new { controller = "Client", id = card.Client.Id });
             }
             catch (CardNotFoundException)

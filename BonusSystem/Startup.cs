@@ -37,7 +37,7 @@ namespace BonusSystem
             IRemoveClient removeClient = new RemoveClientService(db);
             IEditClient editClient = new EditClientService(db);
             IDebit debit = new DebitService(db);
-            ICredit creditFunds = new CreditFundsService(db);
+            ICredit creditFunds = new CreditService(db);
 
             services.AddSingleton<ICreateClient>(provider => createClient);
             services.AddSingleton<IRemoveClient>(provider => removeClient);
