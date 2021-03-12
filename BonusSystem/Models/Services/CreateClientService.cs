@@ -12,6 +12,9 @@ namespace BonusSystem.Models.Services
 
         public CreateClientService(ApplicationContext db) => _db = db;
 
+        private const int _minValueNumber = 100000;
+        private const int _maxValueNumber = 999999;
+
         public async Task Create(ViewCreateClient_BonusCard model)
         {
             if (model != null)
@@ -44,7 +47,7 @@ namespace BonusSystem.Models.Services
         {
             Random rnd = new Random();
 
-            int number = rnd.Next(100000, 999999);
+            int number = rnd.Next(_minValueNumber, _maxValueNumber);
             var cards = await _db.BonusCards.ToListAsync();
 
             if (cards != null)
@@ -60,7 +63,7 @@ namespace BonusSystem.Models.Services
                     }
 
                     if (!isUniqueNumber)
-                        number = rnd.Next(100000, 999999);
+                        number = rnd.Next(_minValueNumber, _maxValueNumber);
 
                 } while (!isUniqueNumber);
             }
