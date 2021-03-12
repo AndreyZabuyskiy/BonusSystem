@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Services
 {
-    public class CreditFundsService : ICreditFunds
+    public class CreditFundsService : ICredit
     {
         private ApplicationContext _db;
 

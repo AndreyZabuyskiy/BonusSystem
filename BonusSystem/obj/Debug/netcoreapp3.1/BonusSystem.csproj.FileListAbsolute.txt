@@ -150,5 +150,5 @@ D:\Программирование\Приложения\BonusSystem\BonusSystem
 D:\Программирование\Приложения\BonusSystem\BonusSystem\bin\Debug\netcoreapp3.1\zh-Hans\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Программирование\Приложения\BonusSystem\BonusSystem\bin\Debug\netcoreapp3.1\zh-Hant\Microsoft.CodeAnalysis.Workspaces.resources.dll
 D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Home\Search.cshtml.g.cs
-D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\Debit.cshtml.g.cs
-D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Client\Credit.cshtml.g.cs
+D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Card\Credit.cshtml.g.cs
+D:\Программирование\Приложения\BonusSystem\BonusSystem\obj\Debug\netcoreapp3.1\Razor\Views\Card\Debit.cshtml.g.cs

@@ -37,13 +37,13 @@ namespace BonusSystem
             IRemoveClient removeClient = new RemoveClientService(db);
             IEditClient editClient = new EditClientService(db);
             IDebit debit = new DebitService(db);
-            ICreditFunds creditFunds = new CreditFundsService(db);
+            ICredit creditFunds = new CreditFundsService(db);
 
             services.AddSingleton<ICreateClient>(provider => createClient);
             services.AddSingleton<IRemoveClient>(provider => removeClient);
             services.AddSingleton<IEditClient>(provider => editClient);
             services.AddSingleton<IDebit>(provider => debit);
-            services.AddSingleton<ICreditFunds>(provider => creditFunds);
+            services.AddSingleton<ICredit>(provider => creditFunds);
 
             services.AddControllersWithViews();
         }

@@ -12,7 +12,7 @@
 
 @if (Model.Card.ExpirationDate > DateTime.Now)
 {
-    <form asp-antiforgery="true" asp-action="debit" asp-controller="client">
+    <form asp-antiforgery="true" asp-action="debit" asp-controller="card">
         <div>
             <div class="validation" asp-validation-summary="ModelOnly"></div>
 

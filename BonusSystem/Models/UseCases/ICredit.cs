@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Services
 {
-    public interface ICreditFunds
+    public interface ICredit
     {
         public Task<BonusCard> CreditFunds(ViewBonusCard_Money model);
     }
