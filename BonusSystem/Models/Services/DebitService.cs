@@ -15,24 +15,20 @@ namespace BonusSystem.Models.Services
 
         public async Task<BonusCard> Debit(ViewBonusCard_Money model)
         {
-            if (model != null) 
-            {
-                var card = await _db.BonusCards.Include(c => c.Client)
+            if (model is null) throw new CardNotFoundException();
+
+            var card = await _db.BonusCards.Include(c => c.Client)
                                     .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
 
-                if (card != null)
-                {
-                    if (card.ExpirationDate > DateTime.Now && card.Balance > model.Money)
-                    {
-                        card.Balance -= model.Money;
-                        await _db.SaveChangesAsync();
-                    }
+            if(card is null) throw new CardNotFoundException();
 
-                    return card;
-                }
+            if (card.ExpirationDate > DateTime.Now && card.Balance > model.Money)
+            {
+                card.Balance -= model.Money;
+                await _db.SaveChangesAsync();
             }
 
-            throw new CardNotFoundException();
+            return card;
         }
     }
 }
