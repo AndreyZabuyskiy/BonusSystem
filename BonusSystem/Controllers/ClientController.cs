@@ -15,16 +15,19 @@ namespace BonusSystem.Controllers
         private IEditClient _editClient;
         private IDebit _debit;
         private ICreditFunds _creditFunds;
+        private IRemoveClient _removeClient;
 
         public ClientController(ApplicationContext db,
                                 [FromServices]IEditClient editClient,
                                 [FromServices]IDebit debit,
-                                [FromServices]ICreditFunds creditFunds)
+                                [FromServices]ICreditFunds creditFunds,
+                                [FromServices] IRemoveClient removeClient)
         {
             _db = db;
             _editClient = editClient;
             _debit = debit;
             _creditFunds = creditFunds;
+            _removeClient = removeClient;
         }
 
         public async Task<IActionResult> View(Guid id)
@@ -63,6 +66,14 @@ namespace BonusSystem.Controllers
             }
 
             return NotFound();
+        }
+
+        public async Task<IActionResult> RemoveClient(Guid id)
+        {
+            if (id != null)
+                await _removeClient.Remove(id);
+
+            return RedirectToAction("Index", new { controller = "Home" });
         }
 
         [HttpGet]

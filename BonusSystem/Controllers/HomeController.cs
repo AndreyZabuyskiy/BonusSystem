@@ -17,17 +17,13 @@ namespace BonusSystem.Controllers
 
         private ApplicationContext _db;
         private ICreateClient _createClient;
-        private IRemoveClient _removeClient;
 
-        public HomeController(ILogger<HomeController> logger,
-                                    ApplicationContext db, 
-                                    [FromServices]ICreateClient createClient,
-                                    [FromServices]IRemoveClient removeClient)
+        public HomeController(ILogger<HomeController> logger, ApplicationContext db, 
+                                        [FromServices]ICreateClient createClient)
         {
             _logger = logger;
             _db = db;
             _createClient = createClient;
-            _removeClient = removeClient;
         }
 
         public async Task<IActionResult> Index()
@@ -46,14 +42,6 @@ namespace BonusSystem.Controllers
         {
             if (ModelState.IsValid)
                 await _createClient.Create(model);
-
-            return RedirectToAction("Index");
-        }
-
-        public async Task<IActionResult> RemoveClient(Guid id)
-        {
-            if(id != null)
-                await _removeClient.Remove(id);
 
             return RedirectToAction("Index");
         }
