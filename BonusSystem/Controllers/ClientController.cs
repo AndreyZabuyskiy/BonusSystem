@@ -32,116 +32,105 @@ namespace BonusSystem.Controllers
 
         public async Task<IActionResult> View(Guid id)
         {
-            if (id != null)
-            {
-                var client = await _db.Clients.Include(c => c.BonusCard)
+            if (id == null || id == Guid.Empty)
+                return NotFound();
+
+            var client = await _db.Clients.Include(c => c.BonusCard)
                                       .FirstOrDefaultAsync(c => c.Id == id);
 
-                if (client != null) return View(client);
-            }
+            if (client is null) return NotFound();
 
-            return NotFound();
+            return View(client);
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            if (id != null)
-            {
-                var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
+            if (id == null || id == Guid.Empty)
+                return NotFound();
 
-                if (client != null) return View(client);
-            }
+            var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
-            return NotFound();
+            if (client is null) return NotFound();
+
+            return View(client);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(Client client)
         {
-            if (client != null)
-            {                
-                await _editClient.Edit(client);
-                return RedirectToAction("View", new { id = client.Id });
-            }
+            if(client is null) return NotFound();
 
-            return NotFound();
+            await _editClient.Edit(client);
+            return RedirectToAction("View", new { id = client.Id });
         }
 
         public async Task<IActionResult> RemoveClient(Guid id)
         {
-            if (id != null)
+            if (id != null || id != Guid.Empty)
                 await _removeClient.Remove(id);
 
             return RedirectToAction("Index", new { controller = "Home" });
         }
 
         [HttpGet]
-        public async Task<IActionResult> CreditFunds(Guid id)
+        public async Task<IActionResult> Credit(Guid id)
         {
-            if (id != null)
-            {
-                var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
+            if(id == null || id == Guid.Empty)
+                return NotFound();
 
-                if (card != null)
-                {
-                    ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
-                    return View(model);
-                }
-            }
+            var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
 
-            return NotFound();
+            if (card is null) return NotFound();
+
+            ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
+            return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreditFunds(ViewBonusCard_Money model)
+        public async Task<IActionResult> Credit(ViewBonusCard_Money model)
         {
-            if (model != null)
+            if(model is null) return NotFound();
+
+            try
             {
                 BonusCard card = await _creditFunds.CreditFunds(model);
-
-                try
-                {
-                    return RedirectToAction("View", new { id = card.Client.Id });
-                }
-                catch (NullReferenceException) { }
+                return RedirectToAction("View", new { id = card.Client.Id });
             }
-
-            return NotFound();
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]
         public async Task<IActionResult> Debit(Guid id)
         {
-            if (id != null)
-            {
-                var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
+            if(id == null || id == Guid.Empty)
+                return NotFound();
 
-                if (card != null)
-                {
-                    ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
-                    return View(model);
-                }
-            }
+            var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
 
-            return NotFound();
+            if (card is null) return NotFound();
+
+            ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Debit(ViewBonusCard_Money model)
         {
-            if (model != null)
+            if(model is null) return NotFound();
+
+            try
             {
                 BonusCard card = await _debit.Debit(model);
-
-                try
-                {
-                    return RedirectToAction("View", new { id = card.Client.Id });
-                }
-                catch (NullReferenceException) { }
+                return RedirectToAction("View", new { id = card.Client.Id });
             }
-
-            return NotFound();
+            catch (NullReferenceException)
+            {
+                return NotFound();
+            }
         }
     }
 }
