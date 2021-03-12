@@ -31,11 +31,13 @@ namespace BonusSystem
                     .UseSqlServer(connection)
                     .Options;
 
-            ICreateClient createClient = new CreateClientService(new ApplicationContext(options));
-            IRemoveClient removeClient = new RemoveClientService(new ApplicationContext(options));
-            IEditClient editClient = new EditClientService(new ApplicationContext(options));
-            IDebit debit = new DebitService(new ApplicationContext(options));
-            ICreditFunds creditFunds = new CreditFundsService(new ApplicationContext(options));
+            var db = new ApplicationContext(options);
+
+            ICreateClient createClient = new CreateClientService(db);
+            IRemoveClient removeClient = new RemoveClientService(db);
+            IEditClient editClient = new EditClientService(db);
+            IDebit debit = new DebitService(db);
+            ICreditFunds creditFunds = new CreditFundsService(db);
 
             services.AddSingleton<ICreateClient>(provider => createClient);
             services.AddSingleton<IRemoveClient>(provider => removeClient);
