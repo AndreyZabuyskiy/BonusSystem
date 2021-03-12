@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -32,10 +30,16 @@ namespace BonusSystem.Controllers
             _removeClient = removeClient;
         }
 
-        public async Task<IActionResult> Index() => View(await _db.Clients.Include(c => c.BonusCard).ToListAsync());
+        public async Task<IActionResult> Index()
+        {
+            return View(await _db.Clients.Include(c => c.BonusCard).ToListAsync());
+        }
 
         [HttpGet]
-        public IActionResult Create() => View();
+        public IActionResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create(ViewCreateClient_BonusCard model)
@@ -55,7 +59,10 @@ namespace BonusSystem.Controllers
         }
 
         [HttpGet]
-        public IActionResult Search() => View();
+        public IActionResult Search() 
+        { 
+            return View(); 
+        }
 
         [HttpPost]
         public async Task<IActionResult> SearchByPhoneNumber(ViewSearchClient model)

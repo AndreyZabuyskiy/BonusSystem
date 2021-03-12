@@ -1,5 +1,3 @@
-using System;
-
 namespace BonusSystem.Models
 {
     public class ErrorViewModel

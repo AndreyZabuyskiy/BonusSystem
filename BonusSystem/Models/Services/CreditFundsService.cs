@@ -2,8 +2,6 @@
 using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Services
@@ -12,10 +10,7 @@ namespace BonusSystem.Models.Services
     {
         private ApplicationContext _db;
 
-        public CreditFundsService(ApplicationContext db)
-        {
-            _db = db;
-        }
+        public CreditFundsService(ApplicationContext db) => _db = db;
 
         public async Task<BonusCard> CreditFunds(ViewBonusCard_Money model)
         {
