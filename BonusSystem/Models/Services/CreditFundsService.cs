@@ -1,4 +1,5 @@
 ﻿using BonusSystem.Models.Db;
+using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -31,7 +32,7 @@ namespace BonusSystem.Models.Services
                 }
             }
 
-            throw new NullReferenceException();
+            throw new CardNotFoundException();
         }
     }
 }

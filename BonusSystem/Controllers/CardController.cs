@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using BonusSystem.Models;
 using BonusSystem.Models.Db;
+using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
 using BonusSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -50,7 +49,7 @@ namespace BonusSystem.Controllers
                 BonusCard card = await _credit.CreditFunds(model);
                 return RedirectToAction("View", new { controller = "Client", id = card.Client.Id });
             }
-            catch (NullReferenceException)
+            catch (CardNotFoundException)
             {
                 return NotFound();
             }
@@ -80,7 +79,7 @@ namespace BonusSystem.Controllers
                 BonusCard card = await _debit.Debit(model);
                 return RedirectToAction("View", new { controller = "Client", id = card.Client.Id });
             }
-            catch (NullReferenceException)
+            catch (CardNotFoundException)
             {
                 return NotFound();
             }
