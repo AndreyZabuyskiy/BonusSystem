@@ -69,10 +69,17 @@ namespace BonusSystem.Controllers
 
         public async Task<IActionResult> RemoveClient(Guid id)
         {
-            if (id != null || id != Guid.Empty)
-                await _removeClient.Remove(id);
+            if (id == null || id == Guid.Empty) return NotFound();
 
-            return RedirectToAction("Index", new { controller = "Home" });
+            try
+            {
+                await _removeClient.Remove(id);
+                return RedirectToAction("Index", new { controller = "Home" });
+            }
+            catch(ClientNotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }
