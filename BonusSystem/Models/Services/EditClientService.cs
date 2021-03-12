@@ -1,4 +1,5 @@
 ﻿using BonusSystem.Models.Db;
+using BonusSystem.Models.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -12,16 +13,14 @@ namespace BonusSystem.Models.Services
 
         public async Task Edit(Client client)
         {
-            if (client != null)
-            {
-                var editClient = await _db.Clients.FirstOrDefaultAsync(c => c.Id == client.Id);
+            if (client is null) throw new ClientNotFoundException();
 
-                if (editClient != null)
-                {
-                    editClient.Copy(client);
-                    await _db.SaveChangesAsync();
-                }
-            }
+            var editClient = await _db.Clients.FirstOrDefaultAsync(c => c.Id == client.Id);
+
+            if (client is null) throw new ClientNotFoundException();
+
+            editClient.Copy(client);
+            await _db.SaveChangesAsync();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using BonusSystem.Models;
 using BonusSystem.Models.Db;
+using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
 using BonusSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -55,8 +56,15 @@ namespace BonusSystem.Controllers
         {
             if(client is null) return NotFound();
 
-            await _editClient.Edit(client);
-            return RedirectToAction("View", new { id = client.Id });
+            try
+            {
+                await _editClient.Edit(client);
+                return RedirectToAction("View", new { id = client.Id });
+            }
+            catch(ClientNotFoundException)
+            {
+                return NotFound();
+            }
         }
 
         public async Task<IActionResult> RemoveClient(Guid id)
