@@ -1,4 +1,5 @@
-using BonusSystem.Models.Db;
+﻿using BonusSystem.Models.Db;
+using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,17 +34,14 @@ namespace BonusSystem
 
             var db = new ApplicationContext(options);
 
-            ICreateClient createClient = new CreateClientService(db);
-            IRemoveClient removeClient = new RemoveClientService(db);
-            IEditClient editClient = new EditClientService(db);
-            IDebit debit = new DebitService(db);
-            ICredit creditFunds = new CreditService(db);
+            ClientService clientService = new ClientService(db);
+            CardService cardService = new CardService(db);
 
-            services.AddSingleton<ICreateClient>(provider => createClient);
-            services.AddSingleton<IRemoveClient>(provider => removeClient);
-            services.AddSingleton<IEditClient>(provider => editClient);
-            services.AddSingleton<IDebit>(provider => debit);
-            services.AddSingleton<ICredit>(provider => creditFunds);
+            services.AddSingleton<ICreateClient>(provider => clientService);
+            services.AddSingleton<IRemoveClient>(provider => clientService);
+            services.AddSingleton<IEditClient>(provider => clientService);
+            services.AddSingleton<IDebit>(provider => cardService);
+            services.AddSingleton<ICredit>(provider => cardService);
 
             services.AddControllersWithViews();
         }

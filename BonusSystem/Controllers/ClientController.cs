@@ -4,7 +4,6 @@ using BonusSystem.Models;
 using BonusSystem.Models.Db;
 using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
-using BonusSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

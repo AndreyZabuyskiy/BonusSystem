@@ -1,19 +1,21 @@
 ﻿using BonusSystem.Models.Db;
+using BonusSystem.Models.Services;
 using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace BonusSystem.Models.Services
+namespace BonusSystem.Models.Exceptions
 {
-    public class CreateClientService : ICreateClient
+    public class ClientService : ICreateClient, IEditClient, IRemoveClient
     {
         private ApplicationContext _db;
-
-        public CreateClientService(ApplicationContext db) => _db = db;
-
         private const int _minValueNumber = 100000;
         private const int _maxValueNumber = 999999;
+
+        public ClientService(ApplicationContext db) => _db = db;
 
         public async Task Create(ViewCreateClient_BonusCard model)
         {
@@ -41,6 +43,30 @@ namespace BonusSystem.Models.Services
                 _db.Clients.Add(client);
                 await _db.SaveChangesAsync();
             }
+        }
+
+        public async Task Edit(Client client)
+        {
+            if (client is null) throw new ClientNotFoundException();
+
+            var editClient = await _db.Clients.FirstOrDefaultAsync(c => c.Id == client.Id);
+
+            if (editClient is null) throw new ClientNotFoundException();
+
+            editClient.Copy(client);
+            await _db.SaveChangesAsync();
+        }
+
+        public async Task Remove(Guid id)
+        {
+            if (id == null || id == Guid.Empty) throw new ClientNotFoundException();
+
+            var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (client is null) throw new ClientNotFoundException();
+
+            _db.Clients.Remove(client);
+            await _db.SaveChangesAsync();
         }
 
         private async Task<int> GetNumberCard()
