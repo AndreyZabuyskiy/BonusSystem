@@ -8,6 +8,6 @@ namespace BonusSystem.Models.UseCases
 {
     public interface ICreateCard
     {
-        public BonusCard Create(ViewCreateClient_BonusCard model);
+        public BonusCard Create(CreateClientBonusCardView model);
     }
 }

@@ -15,7 +15,7 @@ namespace BonusSystem.Models.Services
 
         public CardService(ApplicationContext db) => _db = db;
 
-        public async Task<BonusCard> CreditAsync(ViewBonusCard_Money model)
+        public async Task<BonusCard> CreditAsync(BonusCardMoneyView model)
         {
             if (model is null) throw new CardNotFoundException();
 
@@ -33,7 +33,7 @@ namespace BonusSystem.Models.Services
             return card;
         }
 
-        public async Task<BonusCard> DebitAsync(ViewBonusCard_Money model)
+        public async Task<BonusCard> DebitAsync(BonusCardMoneyView model)
         {
             if (model is null) throw new CardNotFoundException();
 

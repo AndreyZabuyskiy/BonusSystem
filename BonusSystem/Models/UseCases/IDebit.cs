@@ -8,6 +8,6 @@ namespace BonusSystem.Models.Services
 {
     public interface IDebit
     {
-        public Task<BonusCard> DebitAsync(ViewBonusCard_Money model);
+        public Task<BonusCard> DebitAsync(BonusCardMoneyView model);
     }
 }

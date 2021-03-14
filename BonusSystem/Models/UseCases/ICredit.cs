@@ -8,6 +8,6 @@ namespace BonusSystem.Models.Services
 {
     public interface ICredit
     {
-        public Task<BonusCard> CreditAsync(ViewBonusCard_Money model);
+        public Task<BonusCard> CreditAsync(BonusCardMoneyView model);
     }
 }

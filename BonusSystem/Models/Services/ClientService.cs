@@ -17,7 +17,7 @@ namespace BonusSystem.Models.Exceptions
 
         public ClientService(ApplicationContext db) => _db = db;
 
-        public async Task CreateAsync(ViewCreateClient_BonusCard model)
+        public async Task CreateAsync(CreateClientBonusCardView model)
         {
             if (model != null)
             {

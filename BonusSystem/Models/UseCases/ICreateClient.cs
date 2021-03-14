@@ -8,6 +8,6 @@ namespace BonusSystem.Models.Services
 {
     public interface ICreateClient
     {
-        public Task CreateAsync(ViewCreateClient_BonusCard model);
+        public Task CreateAsync(CreateClientBonusCardView model);
     }
 }

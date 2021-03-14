@@ -35,12 +35,12 @@ namespace BonusSystem.Controllers
 
             if (card is null) return NotFound();
 
-            ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
+            BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Credit(ViewBonusCard_Money model)
+        public async Task<IActionResult> Credit(BonusCardMoneyView model)
         {
             if (model is null) return NotFound();
 
@@ -65,12 +65,12 @@ namespace BonusSystem.Controllers
 
             if (card is null) return NotFound();
 
-            ViewBonusCard_Money model = new ViewBonusCard_Money() { Card = card };
+            BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
             return View(model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Debit(ViewBonusCard_Money model)
+        public async Task<IActionResult> Debit(BonusCardMoneyView model)
         {
             if (model is null) return NotFound();
 

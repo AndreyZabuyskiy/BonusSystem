@@ -38,7 +38,7 @@ namespace BonusSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ViewCreateClient_BonusCard model)
+        public async Task<IActionResult> Create(CreateClientBonusCardView model)
         {
             if (ModelState.IsValid)
                 await _createClient.CreateAsync(model);
@@ -53,7 +53,7 @@ namespace BonusSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SearchByPhoneNumber(ViewSearchClient model)
+        public async Task<IActionResult> SearchByPhoneNumber(SearchClientView model)
         {
             if(model != null)
             {
@@ -67,7 +67,7 @@ namespace BonusSystem.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SearchByNumberCard(ViewSearchClient model)
+        public async Task<IActionResult> SearchByNumberCard(SearchClientView model)
         {
             if (model != null)
             {
