@@ -57,7 +57,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                await _editClient.Edit(client);
+                await _editClient.EditAsync(client);
                 return RedirectToAction("View", new { id = client.Id });
             }
             catch(ClientNotFoundException)
@@ -72,7 +72,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                await _removeClient.Remove(id);
+                await _removeClient.RemoveAsync(id);
                 return RedirectToAction("Index", new { controller = "Home" });
             }
             catch(ClientNotFoundException)

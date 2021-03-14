@@ -41,7 +41,7 @@ namespace BonusSystem.Controllers
         public async Task<IActionResult> Create(ViewCreateClient_BonusCard model)
         {
             if (ModelState.IsValid)
-                await _createClient.Create(model);
+                await _createClient.CreateAsync(model);
 
             return RedirectToAction("Index");
         }

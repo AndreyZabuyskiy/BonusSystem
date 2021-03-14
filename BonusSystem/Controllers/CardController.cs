@@ -46,7 +46,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                BonusCard card = await _credit.Credit(model);
+                BonusCard card = await _credit.CreditAsync(model);
                 return RedirectToAction("View", new { controller = "Client", id = card.Client.Id });
             }
             catch (CardNotFoundException)
@@ -76,7 +76,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                BonusCard card = await _debit.Debit(model);
+                BonusCard card = await _debit.DebitAsync(model);
                 return RedirectToAction("View", new { controller = "Client", id = card.Client.Id });
             }
             catch (CardNotFoundException)

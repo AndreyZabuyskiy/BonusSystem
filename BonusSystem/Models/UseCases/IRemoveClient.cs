@@ -7,6 +7,6 @@ namespace BonusSystem.Models.Services
 {
     public interface IRemoveClient
     {
-        public Task Remove(Guid id);
+        public Task RemoveAsync(Guid id);
     }
 }

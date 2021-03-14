@@ -7,6 +7,6 @@ namespace BonusSystem.Models.Services
 {
     public interface IEditClient
     {
-        public Task Edit(Client client);
+        public Task EditAsync(Client client);
     }
 }

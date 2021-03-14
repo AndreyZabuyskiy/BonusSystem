@@ -17,11 +17,11 @@ namespace BonusSystem.Models.Exceptions
 
         public ClientService(ApplicationContext db) => _db = db;
 
-        public async Task Create(ViewCreateClient_BonusCard model)
+        public async Task CreateAsync(ViewCreateClient_BonusCard model)
         {
             if (model != null)
             {
-                int number = await GetNumberCard();
+                int number = await GetNumberCardAsync();
 
                 BonusCard card = new BonusCard()
                 {
@@ -45,7 +45,7 @@ namespace BonusSystem.Models.Exceptions
             }
         }
 
-        public async Task Edit(Client client)
+        public async Task EditAsync(Client client)
         {
             if (client is null) throw new ClientNotFoundException();
 
@@ -57,7 +57,7 @@ namespace BonusSystem.Models.Exceptions
             await _db.SaveChangesAsync();
         }
 
-        public async Task Remove(Guid id)
+        public async Task RemoveAsync(Guid id)
         {
             if (id == null || id == Guid.Empty) throw new ClientNotFoundException();
 
@@ -69,7 +69,7 @@ namespace BonusSystem.Models.Exceptions
             await _db.SaveChangesAsync();
         }
 
-        private async Task<int> GetNumberCard()
+        private async Task<int> GetNumberCardAsync()
         {
             Random rnd = new Random();
 

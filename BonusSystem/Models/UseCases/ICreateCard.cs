@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BonusSystem.Models.Services
+namespace BonusSystem.Models.UseCases
 {
-    public interface ICreateClient
+    public interface ICreateCard
     {
-        public Task CreateAsync(ViewCreateClient_BonusCard model);
+        public BonusCard Create(ViewCreateClient_BonusCard model);
     }
 }
