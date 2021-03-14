@@ -1,5 +1,6 @@
 ﻿using BonusSystem.Models.Db;
 using BonusSystem.Models.Services;
+using BonusSystem.Models.UseCases;
 using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,40 +10,25 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Exceptions
 {
-    public class ClientService : ICreateClient, IEditClient, IRemoveClient
+    public class ClientService : ICreateClient, IEditClient, IRemoveClient, ISaveClientDb
     {
         private ApplicationContext _db;
-        private const int _minValueNumber = 100000;
-        private const int _maxValueNumber = 999999;
 
         public ClientService(ApplicationContext db) => _db = db;
 
-        public async Task CreateAsync(CreateClientBonusCardView model)
+        public Client Create(CreateClientBonusCardView model)
         {
-            if (model != null)
+            if (model is null) throw new Exception();
+
+            Client client = new Client()
             {
-                int number = await GetNumberCardAsync();
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                MiddleName = model.MiddleName,
+                PhoneNumber = model.PhoneNumber
+            };
 
-                BonusCard card = new BonusCard()
-                {
-                    Number = number,
-                    CreateDate = DateTime.Now,
-                    ExpirationDate = DateTime.Now.AddDays(30),
-                    Balance = model.Balance
-                };
-
-                Client client = new Client()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    MiddleName = model.MiddleName,
-                    PhoneNumber = model.PhoneNumber,
-                    BonusCard = card
-                };
-
-                _db.Clients.Add(client);
-                await _db.SaveChangesAsync();
-            }
+            return client;
         }
 
         public async Task EditAsync(Client client)
@@ -69,32 +55,13 @@ namespace BonusSystem.Models.Exceptions
             await _db.SaveChangesAsync();
         }
 
-        private async Task<int> GetNumberCardAsync()
+        public async Task Save(Client client)
         {
-            Random rnd = new Random();
-
-            int number = rnd.Next(_minValueNumber, _maxValueNumber);
-            var cards = await _db.BonusCards.ToListAsync();
-
-            if (cards != null)
+            if (client.BonusCard != null)
             {
-                bool isUniqueNumber = true;
-
-                do
-                {
-                    foreach (var card in cards)
-                    {
-                        if (card.Number == number)
-                            isUniqueNumber = false;
-                    }
-
-                    if (!isUniqueNumber)
-                        number = rnd.Next(_minValueNumber, _maxValueNumber);
-
-                } while (!isUniqueNumber);
+                _db.Clients.Add(client);
+                await _db.SaveChangesAsync();
             }
-
-            return number;
         }
     }
 }

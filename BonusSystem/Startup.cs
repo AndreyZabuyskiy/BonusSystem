@@ -1,6 +1,7 @@
 ﻿using BonusSystem.Models.Db;
 using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
+using BonusSystem.Models.UseCases;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -35,11 +36,13 @@ namespace BonusSystem
             var db = new ApplicationContext(options);
 
             ClientService clientService = new ClientService(db);
-            CardService cardService = new CardService(db);
+            BonusCardService cardService = new BonusCardService(db);
 
             services.AddSingleton<ICreateClient>(provider => clientService);
             services.AddSingleton<IRemoveClient>(provider => clientService);
             services.AddSingleton<IEditClient>(provider => clientService);
+            services.AddSingleton<ISaveClientDb>(provider => clientService);
+            services.AddSingleton<ICreateBonusCard>(provider => cardService);
             services.AddSingleton<IDebit>(provider => cardService);
             services.AddSingleton<ICredit>(provider => cardService);
 

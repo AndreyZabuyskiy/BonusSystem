@@ -1,19 +1,36 @@
 ﻿using BonusSystem.Models.Db;
 using BonusSystem.Models.Exceptions;
+using BonusSystem.Models.UseCases;
 using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Services
 {
-    public class CardService : ICredit, IDebit
+    public class BonusCardService : ICreateBonusCard, ICredit, IDebit
     {
         private ApplicationContext _db;
+        private const int _minValueNumber = 100000;
+        private const int _maxValueNumber = 999999;
 
-        public CardService(ApplicationContext db) => _db = db;
+        public BonusCardService(ApplicationContext db) => _db = db;
+
+        public BonusCard Create(int balance)
+        {
+            int number = GenerateBonusCardNumber();
+
+            BonusCard card = new BonusCard()
+            {
+                Number = number,
+                CreateDate = DateTime.Now,
+                ExpirationDate = DateTime.Now.AddDays(30),
+                Balance = balance
+            };
+
+            return card;
+        }
 
         public async Task<BonusCard> CreditAsync(BonusCardMoneyView model)
         {
@@ -49,6 +66,34 @@ namespace BonusSystem.Models.Services
             }
 
             return card;
+        }
+
+        private int GenerateBonusCardNumber()
+        {
+            Random rnd = new Random();
+
+            int number = rnd.Next(_minValueNumber, _maxValueNumber);
+            var cards = _db.BonusCards.ToList();
+
+            if (cards != null || cards.Count != 0)
+            {
+                bool isUniqueNumber = true;
+
+                do
+                {
+                    foreach (var card in cards)
+                    {
+                        if (card.Number == number)
+                            isUniqueNumber = false;
+                    }
+
+                    if (!isUniqueNumber)
+                        number = rnd.Next(_minValueNumber, _maxValueNumber);
+
+                } while (!isUniqueNumber);
+            }
+
+            return number;
         }
     }
 }

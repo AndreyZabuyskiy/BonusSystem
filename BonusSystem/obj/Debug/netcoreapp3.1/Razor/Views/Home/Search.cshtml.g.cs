@@ -28,7 +28,7 @@ using BonusSystem.Models;
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"fcc45aee2f1c230cf07a0a171e501b9fe68fb7f5", @"/Views/Home/Search.cshtml")]
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"334b854437598feab12d8d0e3d2578c5fbe29dc0", @"/Views/_ViewImports.cshtml")]
-    public class Views_Home_Search : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<BonusSystem.Models.ViewModels.ViewSearchClient>
+    public class Views_Home_Search : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<BonusSystem.Models.ViewModels.SearchClientView>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("control-label"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("type", "text", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -210,7 +210,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
         public global::Microsoft.AspNetCore.Mvc.Rendering.IJsonHelper Json { get; private set; }
         [global::Microsoft.AspNetCore.Mvc.Razor.Internal.RazorInjectAttribute]
-        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<BonusSystem.Models.ViewModels.ViewSearchClient> Html { get; private set; }
+        public global::Microsoft.AspNetCore.Mvc.Rendering.IHtmlHelper<BonusSystem.Models.ViewModels.SearchClientView> Html { get; private set; }
     }
 }
 #pragma warning restore 1591

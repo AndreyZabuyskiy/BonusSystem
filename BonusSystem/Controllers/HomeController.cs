@@ -8,6 +8,7 @@ using BonusSystem.Models.Db;
 using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using BonusSystem.Models.Services;
+using BonusSystem.Models.UseCases;
 
 namespace BonusSystem.Controllers
 {
@@ -17,13 +18,19 @@ namespace BonusSystem.Controllers
 
         private ApplicationContext _db;
         private ICreateClient _createClient;
+        private ICreateBonusCard _createBonusCard;
+        private ISaveClientDb _saveClientDb;
 
         public HomeController(ILogger<HomeController> logger, ApplicationContext db, 
-                                        [FromServices]ICreateClient createClient)
+                                        [FromServices]ICreateClient createClient,
+                                        [FromServices]ICreateBonusCard createBonusCard,
+                                        [FromServices]ISaveClientDb saveClientDb)
         {
             _logger = logger;
             _db = db;
             _createClient = createClient;
+            _createBonusCard = createBonusCard;
+            _saveClientDb = saveClientDb;
         }
 
         public async Task<IActionResult> Index()
@@ -41,7 +48,12 @@ namespace BonusSystem.Controllers
         public async Task<IActionResult> Create(CreateClientBonusCardView model)
         {
             if (ModelState.IsValid)
-                await _createClient.CreateAsync(model);
+            {
+                var client = _createClient.Create(model);
+                var card = _createBonusCard.Create(model.Balance);
+                client.BonusCard = card;
+                await _saveClientDb.Save(client);
+            }
 
             return RedirectToAction("Index");
         }
