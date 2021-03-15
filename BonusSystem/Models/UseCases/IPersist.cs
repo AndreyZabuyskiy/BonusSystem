@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.UseCases
 {
-    public interface Persist
+    public interface IPersist
     {
         public Task PersistAsync(Client client);
     }

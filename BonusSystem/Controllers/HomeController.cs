@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -9,6 +8,7 @@ using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using BonusSystem.Models.Services;
 using BonusSystem.Models.UseCases;
+using System.Collections.Generic;
 
 namespace BonusSystem.Controllers
 {
@@ -19,23 +19,34 @@ namespace BonusSystem.Controllers
         private ApplicationContext _db;
         private ICreateClient _createClient;
         private ICreateBonusCard _createBonusCard;
-        private Persist _saveClientDb;
+        private IPersist _saveClientDb;
+        private IGetClients _getClients;
 
         public HomeController(ILogger<HomeController> logger, ApplicationContext db, 
                                         [FromServices]ICreateClient createClient,
                                         [FromServices]ICreateBonusCard createBonusCard,
-                                        [FromServices]Persist saveClientDb)
+                                        [FromServices]IPersist saveClientDb,
+                                        [FromServices]IGetClients getClients)
         {
             _logger = logger;
             _db = db;
             _createClient = createClient;
             _createBonusCard = createBonusCard;
             _saveClientDb = saveClientDb;
+            _getClients = getClients;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _db.Clients.Include(c => c.BonusCard).ToListAsync());
+            try
+            {
+                var clients = await _getClients.GetClientsAsync(true);
+                return View(clients);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]

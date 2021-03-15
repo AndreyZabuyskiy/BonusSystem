@@ -5,12 +5,11 @@ using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Exceptions
 {
-    public class ClientService : ICreateClient, IEditClient, IRemoveClient, Persist
+    public class ClientService : ICreateClient, IEditClient, IRemoveClient, IPersist, IGetClients
     {
         private ApplicationContext _db;
 
@@ -62,6 +61,24 @@ namespace BonusSystem.Models.Exceptions
                 _db.Clients.Add(client);
                 await _db.SaveChangesAsync();
             }
+        }
+
+        public async Task<List<Client>> GetClientsAsync(bool isIncludeBonusCard)
+        {
+            List<Client> clients;
+
+            if (isIncludeBonusCard)
+            {
+                clients = await _db.Clients.Include(c => c.BonusCard).ToListAsync();
+            }
+            else
+            {
+                clients = await _db.Clients.ToListAsync();
+            }
+
+            if (clients is null) throw new Exception();
+
+            return clients;
         }
     }
 }
