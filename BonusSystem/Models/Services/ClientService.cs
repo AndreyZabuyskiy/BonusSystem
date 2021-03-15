@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Exceptions
 {
-    public class ClientService : ICreateClient, IEditClient, IRemoveClient, IPersist, IGetClients
+    public class ClientService : ICreateClient, IEditClient, IRemoveClient, IPersist, IGetClients, IGetClient
     {
         private ApplicationContext _db;
 
@@ -79,6 +79,25 @@ namespace BonusSystem.Models.Exceptions
             if (clients is null) throw new Exception();
 
             return clients;
+        }
+
+        public async Task<Client> GetClientAsync(Guid id, bool isIncludeBonusCard)
+        {
+            if (id == null || id == Guid.Empty) throw new Exception();
+
+            Client client;
+            if (isIncludeBonusCard)
+            {
+                client = await _db.Clients.Include(c => c.BonusCard).FirstOrDefaultAsync(c => c.Id == id);
+            }
+            else
+            {
+                client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
+            }
+
+            if (client is null) throw new Exception();
+
+            return client;
         }
     }
 }

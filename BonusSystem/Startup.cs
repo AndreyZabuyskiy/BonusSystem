@@ -43,6 +43,7 @@ namespace BonusSystem
             services.AddSingleton<IEditClient>(provider => clientService);
             services.AddSingleton<IPersist>(provider => clientService);
             services.AddSingleton<IGetClients>(provider => clientService);
+            services.AddSingleton<IGetClient>(provider => clientService);
             services.AddSingleton<ICreateBonusCard>(provider => cardService);
             services.AddSingleton<IDebit>(provider => cardService);
             services.AddSingleton<ICredit>(provider => cardService);

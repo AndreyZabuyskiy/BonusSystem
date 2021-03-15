@@ -4,6 +4,7 @@ using BonusSystem.Models;
 using BonusSystem.Models.Db;
 using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
+using BonusSystem.Models.UseCases;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,17 +12,17 @@ namespace BonusSystem.Controllers
 {
     public class ClientController : Controller
     {
-        private ApplicationContext _db;
         private IEditClient _editClient;
         private IRemoveClient _removeClient;
+        private IGetClient _getClient;
 
-        public ClientController(ApplicationContext db,
-                                [FromServices]IEditClient editClient,
-                                [FromServices]IRemoveClient removeClient)
+        public ClientController([FromServices]IEditClient editClient,
+                                [FromServices]IRemoveClient removeClient,
+                                [FromServices]IGetClient getClient)
         {
-            _db = db;
             _editClient = editClient;
             _removeClient = removeClient;
+            _getClient = getClient;
         }
 
         public async Task<IActionResult> View(Guid id)
@@ -29,12 +30,15 @@ namespace BonusSystem.Controllers
             if (id == null || id == Guid.Empty)
                 return NotFound();
 
-            var client = await _db.Clients.Include(c => c.BonusCard)
-                                      .FirstOrDefaultAsync(c => c.Id == id);
-
-            if (client is null) return NotFound();
-
-            return View(client);
+            try
+            {
+                var client = await _getClient.GetClientAsync(id, true);
+                return View(client);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpGet]
@@ -43,11 +47,15 @@ namespace BonusSystem.Controllers
             if (id == null || id == Guid.Empty)
                 return NotFound();
 
-            var client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
-
-            if (client is null) return NotFound();
-
-            return View(client);
+            try
+            {
+                var client = await _getClient.GetClientAsync(id, false);
+                return View(client);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
