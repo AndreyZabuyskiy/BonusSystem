@@ -47,6 +47,7 @@ namespace BonusSystem
             services.AddSingleton<ICreateBonusCard>(provider => cardService);
             services.AddSingleton<IDebit>(provider => cardService);
             services.AddSingleton<ICredit>(provider => cardService);
+            services.AddSingleton<IGetBonusCard>(provider => cardService);
 
             services.AddControllersWithViews();
         }

@@ -4,6 +4,7 @@ using BonusSystem.Models;
 using BonusSystem.Models.Db;
 using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
+using BonusSystem.Models.UseCases;
 using BonusSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,14 +16,17 @@ namespace BonusSystem.Controllers
         private ApplicationContext _db;
         private ICredit _credit;
         private IDebit _debit;
+        private IGetBonusCard _getBonusCard;
 
         public CardController(ApplicationContext db,
                                  [FromServices]ICredit credit,
-                                 [FromServices]IDebit debit)
+                                 [FromServices]IDebit debit,
+                                 [FromServices]IGetBonusCard getBonusCard)
         {
             _db = db;
             _credit = credit;
             _debit = debit;
+            _getBonusCard = getBonusCard;
         }
 
         [HttpGet]
@@ -31,12 +35,16 @@ namespace BonusSystem.Controllers
             if (id == null || id == Guid.Empty)
                 return NotFound();
 
-            var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
-
-            if (card is null) return NotFound();
-
-            BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
-            return View(model);
+            try
+            {
+                var card = await _getBonusCard.GetBonusCardAsync(id, false);
+                BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
+                return View(model);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]
@@ -61,12 +69,16 @@ namespace BonusSystem.Controllers
             if (id == null || id == Guid.Empty)
                 return NotFound();
 
-            var card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
-
-            if (card is null) return NotFound();
-
-            BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
-            return View(model);
+            try
+            {
+                var card = await _getBonusCard.GetBonusCardAsync(id, false);
+                BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
+                return View(model);
+            }
+            catch
+            {
+                return NotFound();
+            }
         }
 
         [HttpPost]

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Services
 {
-    public class BonusCardService : ICreateBonusCard, ICredit, IDebit
+    public class BonusCardService : ICreateBonusCard, ICredit, IDebit, IGetBonusCard
     {
         private ApplicationContext _db;
         private const int _minValueNumber = 100000;
@@ -94,6 +94,26 @@ namespace BonusSystem.Models.Services
             }
 
             return number;
+        }
+
+        public async Task<BonusCard> GetBonusCardAsync(Guid id, bool isIncludeClient)
+        {
+            if (id == null || id == Guid.Empty) throw new Exception();
+
+            BonusCard card;
+
+            if (isIncludeClient)
+            {
+                card = await _db.BonusCards.Include(c => c.Client).FirstOrDefaultAsync(c => c.Id == id);
+            }
+            else
+            {
+                card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
+            }
+
+            if (card is null) throw new Exception();
+
+            return card;
         }
     }
 }
