@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Exceptions
 {
-    public class ClientService : ICreateClient, IEditClient, IRemoveClient, ISaveClientDb
+    public class ClientService : ICreateClient, IEditClient, IRemoveClient, Persist
     {
         private ApplicationContext _db;
 
@@ -55,7 +55,7 @@ namespace BonusSystem.Models.Exceptions
             await _db.SaveChangesAsync();
         }
 
-        public async Task Save(Client client)
+        public async Task PersistAsync(Client client)
         {
             if (client.BonusCard != null)
             {

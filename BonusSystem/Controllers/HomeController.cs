@@ -19,12 +19,12 @@ namespace BonusSystem.Controllers
         private ApplicationContext _db;
         private ICreateClient _createClient;
         private ICreateBonusCard _createBonusCard;
-        private ISaveClientDb _saveClientDb;
+        private Persist _saveClientDb;
 
         public HomeController(ILogger<HomeController> logger, ApplicationContext db, 
                                         [FromServices]ICreateClient createClient,
                                         [FromServices]ICreateBonusCard createBonusCard,
-                                        [FromServices]ISaveClientDb saveClientDb)
+                                        [FromServices]Persist saveClientDb)
         {
             _logger = logger;
             _db = db;
@@ -52,7 +52,7 @@ namespace BonusSystem.Controllers
                 var client = _createClient.Create(model);
                 var card = _createBonusCard.Create(model.Balance);
                 client.BonusCard = card;
-                await _saveClientDb.Save(client);
+                await _saveClientDb.PersistAsync(client);
             }
 
             return RedirectToAction("Index");

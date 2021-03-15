@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.UseCases
 {
-    public interface ISaveClientDb
+    public interface Persist
     {
-        public Task Save(Client client);
+        public Task PersistAsync(Client client);
     }
 }
