@@ -96,20 +96,23 @@ namespace BonusSystem.Models.Services
             return number;
         }
 
-        public async Task<BonusCard> GetBonusCardAsync(Guid id, bool isIncludeClient)
+        public async Task<BonusCard> GetBonusCardAsync(Guid id)
         {
             if (id == null || id == Guid.Empty) throw new Exception();
 
-            BonusCard card;
+            BonusCard card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (isIncludeClient)
-            {
-                card = await _db.BonusCards.Include(c => c.Client).FirstOrDefaultAsync(c => c.Id == id);
-            }
-            else
-            {
-                card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
-            }
+            if (card is null) throw new Exception();
+
+            return card;
+        }
+
+        public async Task<BonusCard> GetBonusCardIncludeClientAsync(Guid id)
+        {
+            if (id == null || id == Guid.Empty) throw new Exception();
+
+            BonusCard card = await _db.BonusCards.Include(c => c.Client)
+                                                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (card is null) throw new Exception();
 

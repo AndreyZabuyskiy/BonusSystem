@@ -32,7 +32,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                var card = await _getBonusCard.GetBonusCardAsync(id, false);
+                var card = await _getBonusCard.GetBonusCardAsync(id);
                 BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
                 return View(model);
             }
@@ -66,7 +66,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                var card = await _getBonusCard.GetBonusCardAsync(id, false);
+                var card = await _getBonusCard.GetBonusCardAsync(id);
                 BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
                 return View(model);
             }
