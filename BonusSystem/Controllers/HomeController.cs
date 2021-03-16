@@ -12,11 +12,11 @@ namespace BonusSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private ApplicationContext _db;
-        private ICreateClient _createClient;
-        private ICreateBonusCard _createBonusCard;
-        private IPersist _saveClientDb;
-        private IGetClients _getClients;
+        private readonly ApplicationContext _db;
+        private readonly ICreateClient _createClient;
+        private readonly ICreateBonusCard _createBonusCard;
+        private readonly IPersist _saveClientDb;
+        private readonly IGetClients _getClients;
 
         public HomeController(ApplicationContext db, [FromServices]ICreateClient createClient,
                                         [FromServices]ICreateBonusCard createBonusCard,

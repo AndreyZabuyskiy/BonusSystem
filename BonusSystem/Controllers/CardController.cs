@@ -11,9 +11,9 @@ namespace BonusSystem.Controllers
 {
     public class CardController : Controller
     {
-        private ICredit _credit;
-        private IDebit _debit;
-        private IGetBonusCard _getBonusCard;
+        private readonly ICredit _credit;
+        private readonly IDebit _debit;
+        private readonly IGetBonusCard _getBonusCard;
 
         public CardController([FromServices]ICredit credit,
                                  [FromServices]IDebit debit,

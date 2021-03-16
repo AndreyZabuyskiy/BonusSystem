@@ -10,9 +10,9 @@ namespace BonusSystem.Controllers
 {
     public class ClientController : Controller
     {
-        private IEditClient _editClient;
-        private IRemoveClient _removeClient;
-        private IGetClient _getClient;
+        private readonly IEditClient _editClient;
+        private readonly IRemoveClient _removeClient;
+        private readonly IGetClient _getClient;
 
         public ClientController([FromServices]IEditClient editClient,
                                 [FromServices]IRemoveClient removeClient,
