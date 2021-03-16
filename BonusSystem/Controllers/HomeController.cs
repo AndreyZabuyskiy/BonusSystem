@@ -34,7 +34,7 @@ namespace BonusSystem.Controllers
         {
             try
             {
-                var clients = await _getClients.GetClientsAsync(true);
+                var clients = await _getClients.GetClientsIncludeBonusCardAsync();
                 return View(clients);
             }
             catch

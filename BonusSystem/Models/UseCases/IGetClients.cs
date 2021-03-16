@@ -7,6 +7,7 @@ namespace BonusSystem.Models.UseCases
 {
     public interface IGetClients
     {
-        public Task<List<Client>> GetClientsAsync(bool isIncludeBonusCard);
+        public Task<List<Client>> GetClientsAsync();
+        public Task<List<Client>> GetClientsIncludeBonusCardAsync();
     }
 }
