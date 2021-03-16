@@ -81,19 +81,23 @@ namespace BonusSystem.Models.Exceptions
             return clients;
         }
 
-        public async Task<Client> GetClientAsync(Guid id, bool isIncludeBonusCard)
+        public async Task<Client> GetClientAsync(Guid id)
         {
             if (id == null || id == Guid.Empty) throw new Exception();
 
-            Client client;
-            if (isIncludeBonusCard)
-            {
-                client = await _db.Clients.Include(c => c.BonusCard).FirstOrDefaultAsync(c => c.Id == id);
-            }
-            else
-            {
-                client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
-            }
+            Client client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (client is null) throw new Exception();
+
+            return client;
+        }
+
+        public async Task<Client> GetClientIncludeBonusCardAsync(Guid id)
+        {
+            if (id == null || id == Guid.Empty) throw new Exception();
+
+            Client client = await _db.Clients.Include(c => c.BonusCard)
+                                             .FirstOrDefaultAsync(c => c.Id == id);
 
             if (client is null) throw new Exception();
 

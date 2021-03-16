@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BonusSystem.Models;
-using BonusSystem.Models.Db;
 using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
 using BonusSystem.Models.UseCases;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BonusSystem.Controllers
 {
@@ -32,7 +30,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                var client = await _getClient.GetClientAsync(id, true);
+                var client = await _getClient.GetClientIncludeBonusCardAsync(id);
                 return View(client);
             }
             catch
@@ -49,7 +47,7 @@ namespace BonusSystem.Controllers
 
             try
             {
-                var client = await _getClient.GetClientAsync(id, false);
+                var client = await _getClient.GetClientAsync(id);
                 return View(client);
             }
             catch

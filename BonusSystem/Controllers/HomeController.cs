@@ -1,34 +1,28 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using BonusSystem.Models;
 using BonusSystem.Models.Db;
 using BonusSystem.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using BonusSystem.Models.Services;
 using BonusSystem.Models.UseCases;
-using System.Collections.Generic;
 
 namespace BonusSystem.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
         private ApplicationContext _db;
         private ICreateClient _createClient;
         private ICreateBonusCard _createBonusCard;
         private IPersist _saveClientDb;
         private IGetClients _getClients;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationContext db, 
-                                        [FromServices]ICreateClient createClient,
+        public HomeController(ApplicationContext db, [FromServices]ICreateClient createClient,
                                         [FromServices]ICreateBonusCard createBonusCard,
                                         [FromServices]IPersist saveClientDb,
                                         [FromServices]IGetClients getClients)
         {
-            _logger = logger;
             _db = db;
             _createClient = createClient;
             _createBonusCard = createBonusCard;

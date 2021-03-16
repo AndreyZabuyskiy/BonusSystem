@@ -1,29 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
 using BonusSystem.Models;
-using BonusSystem.Models.Db;
 using BonusSystem.Models.Exceptions;
 using BonusSystem.Models.Services;
 using BonusSystem.Models.UseCases;
 using BonusSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace BonusSystem.Controllers
 {
     public class CardController : Controller
     {
-        private ApplicationContext _db;
         private ICredit _credit;
         private IDebit _debit;
         private IGetBonusCard _getBonusCard;
 
-        public CardController(ApplicationContext db,
-                                 [FromServices]ICredit credit,
+        public CardController([FromServices]ICredit credit,
                                  [FromServices]IDebit debit,
                                  [FromServices]IGetBonusCard getBonusCard)
         {
-            _db = db;
             _credit = credit;
             _debit = debit;
             _getBonusCard = getBonusCard;
