@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Exceptions
 {
-    public class ClientService : ICreateClient, IEditClient, IRemoveClient, IPersist, IGetClients, IGetClient
+    public class ClientService : ICreateClient, IEditClient, IRemoveClient, IPersist, 
+                                 IGetClients, IGetClient, ISearchClient
     {
         private ApplicationContext _db;
 
@@ -98,6 +99,27 @@ namespace BonusSystem.Models.Exceptions
 
             Client client = await _db.Clients.Include(c => c.BonusCard)
                                              .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (client is null) throw new Exception();
+
+            return client;
+        }
+
+        public async Task<Client> SearchByPhoneNumberAsync(string phoneNumber)
+        {
+            if (phoneNumber is null) throw new Exception();
+
+            Client client = await _db.Clients.FirstOrDefaultAsync(c => c.PhoneNumber == phoneNumber);
+
+            if (client is null) throw new Exception();
+
+            return client;
+        }
+
+        public async Task<Client> SearchByNumberCardAsync(int numberCard)
+        {
+            Client client = await _db.Clients.Include(c => c.BonusCard)
+                                             .FirstOrDefaultAsync(c => c.BonusCard.Number == numberCard);
 
             if (client is null) throw new Exception();
 
