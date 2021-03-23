@@ -36,7 +36,7 @@ namespace BonusSystem.Controllers
                 BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
                 return View(model);
             }
-            catch
+            catch (CardNotFoundException)
             {
                 return NotFound();
             }
@@ -70,7 +70,7 @@ namespace BonusSystem.Controllers
                 BonusCardMoneyView model = new BonusCardMoneyView() { Card = card };
                 return View(model);
             }
-            catch
+            catch (CardNotFoundException)
             {
                 return NotFound();
             }

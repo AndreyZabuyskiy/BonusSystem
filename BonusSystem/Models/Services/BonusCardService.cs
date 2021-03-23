@@ -102,9 +102,7 @@ namespace BonusSystem.Models.Services
 
             BonusCard card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (card is null) throw new Exception();
-
-            return card;
+            return card is null ? throw new CardNotFoundException() : card;
         }
 
         public async Task<BonusCard> GetBonusCardIncludeClientAsync(Guid id)
@@ -114,9 +112,7 @@ namespace BonusSystem.Models.Services
             BonusCard card = await _db.BonusCards.Include(c => c.Client)
                                                  .FirstOrDefaultAsync(c => c.Id == id);
 
-            if (card is null) throw new Exception();
-
-            return card;
+            return card is null ? throw new CardNotFoundException() : card;
         }
     }
 }

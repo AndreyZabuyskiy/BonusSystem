@@ -5,6 +5,7 @@ using BonusSystem.Models;
 using BonusSystem.Models.ViewModels;
 using BonusSystem.Models.Services;
 using BonusSystem.Models.UseCases;
+using BonusSystem.Models.Exceptions;
 
 namespace BonusSystem.Controllers
 {
@@ -36,7 +37,7 @@ namespace BonusSystem.Controllers
                 var clients = await _getClients.GetClientsIncludeBonusCardAsync();
                 return View(clients);
             }
-            catch
+            catch (ClientsNotFoundException)
             {
                 return NotFound();
             }
@@ -78,7 +79,7 @@ namespace BonusSystem.Controllers
                 var client = await _searchClient.SearchByPhoneNumberAsync(model.PhoneNumber);
                 return RedirectToAction("View", new { controller = "Client", id = client.Id });
             }
-            catch
+            catch (ClientNotFoundException)
             {
                 return RedirectToAction("Search");
             }
@@ -94,7 +95,7 @@ namespace BonusSystem.Controllers
                 var client = await _searchClient.SearchByNumberCardAsync(model.NumberCard);
                 return RedirectToAction("View", new { controller = "Client", id = client.Id });
             }
-            catch
+            catch (ClientNotFoundException)
             {
                 return RedirectToAction("Search");
             }

@@ -68,18 +68,14 @@ namespace BonusSystem.Models.Exceptions
         {
             List<Client> clients = await _db.Clients.ToListAsync();
 
-            if (clients is null) throw new Exception();
-
-            return clients;
+            return clients is null ? throw new ClientsNotFoundException() : clients;
         }
 
         public async Task<List<Client>> GetClientsIncludeBonusCardAsync()
         {
             List<Client> clients = await _db.Clients.Include(c => c.BonusCard).ToListAsync();
 
-            if (clients is null) throw new Exception();
-
-            return clients;
+            return clients is null ? throw new ClientsNotFoundException() : clients;
         }
 
         public async Task<Client> GetClientAsync(Guid id)
@@ -88,9 +84,7 @@ namespace BonusSystem.Models.Exceptions
 
             Client client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
-            if (client is null) throw new Exception();
-
-            return client;
+            return client is null ? throw new ClientNotFoundException() : client;
         }
 
         public async Task<Client> GetClientIncludeBonusCardAsync(Guid id)
@@ -100,9 +94,7 @@ namespace BonusSystem.Models.Exceptions
             Client client = await _db.Clients.Include(c => c.BonusCard)
                                              .FirstOrDefaultAsync(c => c.Id == id);
 
-            if (client is null) throw new Exception();
-
-            return client;
+            return client is null ? throw new ClientNotFoundException() : client;
         }
 
         public async Task<Client> SearchByPhoneNumberAsync(string phoneNumber)
@@ -111,9 +103,7 @@ namespace BonusSystem.Models.Exceptions
 
             Client client = await _db.Clients.FirstOrDefaultAsync(c => c.PhoneNumber == phoneNumber);
 
-            if (client is null) throw new Exception();
-
-            return client;
+            return client is null ? throw new ClientNotFoundException() : client;
         }
 
         public async Task<Client> SearchByNumberCardAsync(int numberCard)
@@ -121,9 +111,7 @@ namespace BonusSystem.Models.Exceptions
             Client client = await _db.Clients.Include(c => c.BonusCard)
                                              .FirstOrDefaultAsync(c => c.BonusCard.Number == numberCard);
 
-            if (client is null) throw new Exception();
-
-            return client;
+            return client is null ? throw new ClientNotFoundException() : client;
         }
     }
 }

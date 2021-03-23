@@ -33,7 +33,7 @@ namespace BonusSystem.Controllers
                 var client = await _getClient.GetClientIncludeBonusCardAsync(id);
                 return View(client);
             }
-            catch
+            catch (ClientNotFoundException)
             {
                 return NotFound();
             }
@@ -50,7 +50,7 @@ namespace BonusSystem.Controllers
                 var client = await _getClient.GetClientAsync(id);
                 return View(client);
             }
-            catch
+            catch (ClientNotFoundException)
             {
                 return NotFound();
             }
@@ -66,7 +66,7 @@ namespace BonusSystem.Controllers
                 await _editClient.EditAsync(client);
                 return RedirectToAction("View", new { id = client.Id });
             }
-            catch(ClientNotFoundException)
+            catch (ClientNotFoundException)
             {
                 return NotFound();
             }
