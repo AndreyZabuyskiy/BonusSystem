@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Exceptions
 {
-    public class CardNotFoundException : Exception
+    public class ClientsNotFoundException : Exception
     {
-        public override string Message => "Бонусная карта не найдена";
+        public override string Message => "Пользователи не найдены";
     }
 }

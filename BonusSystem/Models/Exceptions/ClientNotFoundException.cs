@@ -5,5 +5,8 @@ using System.Threading.Tasks;
 
 namespace BonusSystem.Models.Exceptions
 {
-    public class ClientNotFoundException : Exception { }
+    public class ClientNotFoundException : Exception
+    {
+        public override string Message => "Пользователь не найден";
+    }
 }
