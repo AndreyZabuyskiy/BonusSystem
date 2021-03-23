@@ -18,7 +18,7 @@ namespace BonusSystem.Models.Exceptions
 
         public Client Create(CreateClientBonusCardView model)
         {
-            if (model is null) throw new Exception();
+            if (model is null) throw new ModelNullException();
 
             Client client = new Client()
             {
@@ -80,7 +80,7 @@ namespace BonusSystem.Models.Exceptions
 
         public async Task<Client> GetClientAsync(Guid id)
         {
-            if (id == null || id == Guid.Empty) throw new Exception();
+            if (id == null || id == Guid.Empty) throw new IdNullOrEmptyException();
 
             Client client = await _db.Clients.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -89,7 +89,7 @@ namespace BonusSystem.Models.Exceptions
 
         public async Task<Client> GetClientIncludeBonusCardAsync(Guid id)
         {
-            if (id == null || id == Guid.Empty) throw new Exception();
+            if (id == null || id == Guid.Empty) throw new IdNullOrEmptyException();
 
             Client client = await _db.Clients.Include(c => c.BonusCard)
                                              .FirstOrDefaultAsync(c => c.Id == id);
@@ -99,7 +99,7 @@ namespace BonusSystem.Models.Exceptions
 
         public async Task<Client> SearchByPhoneNumberAsync(string phoneNumber)
         {
-            if (phoneNumber is null) throw new Exception();
+            if (phoneNumber is null) throw new ParameterNullOrEmptyException();
 
             Client client = await _db.Clients.FirstOrDefaultAsync(c => c.PhoneNumber == phoneNumber);
 

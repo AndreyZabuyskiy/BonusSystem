@@ -34,7 +34,7 @@ namespace BonusSystem.Models.Services
 
         public async Task<BonusCard> CreditAsync(BonusCardMoneyView model)
         {
-            if (model is null) throw new CardNotFoundException();
+            if (model is null) throw new ModelNullException();
 
             var card = await _db.BonusCards.Include(c => c.Client)
                                     .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
@@ -52,7 +52,7 @@ namespace BonusSystem.Models.Services
 
         public async Task<BonusCard> DebitAsync(BonusCardMoneyView model)
         {
-            if (model is null) throw new CardNotFoundException();
+            if (model is null) throw new ModelNullException();
 
             var card = await _db.BonusCards.Include(c => c.Client)
                                     .FirstOrDefaultAsync(c => c.Id == model.Card.Id);
@@ -98,7 +98,7 @@ namespace BonusSystem.Models.Services
 
         public async Task<BonusCard> GetBonusCardAsync(Guid id)
         {
-            if (id == null || id == Guid.Empty) throw new Exception();
+            if (id == null || id == Guid.Empty) throw new ParameterNullOrEmptyException();
 
             BonusCard card = await _db.BonusCards.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -107,7 +107,7 @@ namespace BonusSystem.Models.Services
 
         public async Task<BonusCard> GetBonusCardIncludeClientAsync(Guid id)
         {
-            if (id == null || id == Guid.Empty) throw new Exception();
+            if (id == null || id == Guid.Empty) throw new ParameterNullOrEmptyException();
 
             BonusCard card = await _db.BonusCards.Include(c => c.Client)
                                                  .FirstOrDefaultAsync(c => c.Id == id);
